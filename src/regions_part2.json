@@ -1,0 +1,771 @@
+[
+  {
+    "county": "Makueni",
+    "countyCode": "017",
+    "constituencies": [
+      { "name": "Mbooni", "constituencyCode": "083", "wards": [
+        { "name": "Tulimani", "wardCode": "0397" },
+        { "name": "Mbooni", "wardCode": "0398" },
+        { "name": "Kithungo/Kitundu", "wardCode": "0399" },
+        { "name": "Kiteta/Kisau", "wardCode": "0400" },
+        { "name": "Waia/Kako", "wardCode": "0401" },
+        { "name": "Kalawa", "wardCode": "0402" }
+      ]},
+      { "name": "Kilome", "constituencyCode": "084", "wards": [
+        { "name": "Kiima Kiu/Kalanzoni", "wardCode": "0403" },
+        { "name": "Mukaa", "wardCode": "0404" },
+        { "name": "Kasikeu", "wardCode": "0405" }
+      ]},
+      { "name": "Kaiti", "constituencyCode": "085", "wards": [
+        { "name": "Ukia", "wardCode": "0406" },
+        { "name": "Kee", "wardCode": "0407" },
+        { "name": "Kilungu", "wardCode": "0408" },
+        { "name": "Ilima", "wardCode": "0409" }
+      ]},
+      { "name": "Makueni", "constituencyCode": "086", "wards": [
+        { "name": "Wote", "wardCode": "0410" },
+        { "name": "Muvau/Kikumini", "wardCode": "0411" },
+        { "name": "Mavindini", "wardCode": "0412" },
+        { "name": "Kitise/Kithuki", "wardCode": "0413" },
+        { "name": "Kathonzweni", "wardCode": "0414" },
+        { "name": "Nzaui/Kalamba", "wardCode": "0415" },
+        { "name": "Mbitini", "wardCode": "0416" }
+      ]},
+      { "name": "Kibwezi West", "constituencyCode": "087", "wards": [
+        { "name": "Makindu", "wardCode": "0417" },
+        { "name": "Nguumo", "wardCode": "0418" },
+        { "name": "Kikumbulyu North", "wardCode": "0419" },
+        { "name": "Kikumbulyu South", "wardCode": "0420" },
+        { "name": "Nguu/Masumba", "wardCode": "0421" },
+        { "name": "Emali/Mulala", "wardCode": "0422" }
+      ]},
+      { "name": "Kibwezi East", "constituencyCode": "088", "wards": [
+        { "name": "Masongaleni", "wardCode": "0423" },
+        { "name": "Mtito Andei", "wardCode": "0424" },
+        { "name": "Thange", "wardCode": "0425" },
+        { "name": "Ivingoni/Nzambani", "wardCode": "0426" }
+      ]}
+    ]
+  },
+  {
+    "county": "Nyandarua",
+    "countyCode": "018",
+    "constituencies": [
+      { "name": "Kinangop", "constituencyCode": "089", "wards": [
+        { "name": "Engineer", "wardCode": "0427" },
+        { "name": "Gathara", "wardCode": "0428" },
+        { "name": "North Kinangop", "wardCode": "0429" },
+        { "name": "Murungaru", "wardCode": "0430" },
+        { "name": "Njabini/Kiburu", "wardCode": "0431" },
+        { "name": "Nyakio", "wardCode": "0432" },
+        { "name": "Githabai", "wardCode": "0433" },
+        { "name": "Magumu", "wardCode": "0434" }
+      ]},
+      { "name": "Kipipiri", "constituencyCode": "090", "wards": [
+        { "name": "Wanjohi", "wardCode": "0435" },
+        { "name": "Kipipiri", "wardCode": "0436" },
+        { "name": "Geta", "wardCode": "0437" },
+        { "name": "Githioro", "wardCode": "0438" }
+      ]},
+      { "name": "Ol Kalou", "constituencyCode": "091", "wards": [
+        { "name": "Karau", "wardCode": "0439" },
+        { "name": "Kanjuiri Range", "wardCode": "0440" },
+        { "name": "Mirangine", "wardCode": "0441" },
+        { "name": "Kaimbaga", "wardCode": "0442" },
+        { "name": "Rurii", "wardCode": "0443" }
+      ]},
+      { "name": "Ol Joro Orok", "constituencyCode": "092", "wards": [
+        { "name": "Gathanji", "wardCode": "0444" },
+        { "name": "Gatimu", "wardCode": "0445" },
+        { "name": "Weru", "wardCode": "0446" },
+        { "name": "Charagita", "wardCode": "0447" }
+      ]},
+      { "name": "Ndaragwa", "constituencyCode": "093", "wards": [
+        { "name": "Lesau", "wardCode": "0448" },
+        { "name": "Kaimbaga", "wardCode": "0449" },
+        { "name": "Shamata", "wardCode": "0450" },
+        { "name": "Central", "wardCode": "0451" }
+      ]}
+    ]
+  },
+  {
+    "county": "Nyeri",
+    "countyCode": "019",
+    "constituencies": [
+      { "name": "Tetu", "constituencyCode": "094", "wards": [
+        { "name": "Dedan Kimathi", "wardCode": "0452" },
+        { "name": "Wamagana", "wardCode": "0453" },
+        { "name": "Aguthi-Gaaki", "wardCode": "0454" }
+      ]},
+      { "name": "Kieni", "constituencyCode": "095", "wards": [
+        { "name": "Mweiga", "wardCode": "0455" },
+        { "name": "Naromoru", "wardCode": "0456" },
+        { "name": "Mwiyogo/Endarasha", "wardCode": "0457" },
+        { "name": "Mugunda", "wardCode": "0458" },
+        { "name": "Gatarakwa", "wardCode": "0459" },
+        { "name": "Thegu River", "wardCode": "0460" },
+        { "name": "Kabaru", "wardCode": "0461" },
+        { "name": "Gakawa", "wardCode": "0462" }
+      ]},
+      { "name": "Mathira", "constituencyCode": "096", "wards": [
+        { "name": "Ruguru", "wardCode": "0463" },
+        { "name": "Magutu", "wardCode": "0464" },
+        { "name": "Iriaini", "wardCode": "0465" },
+        { "name": "Konyu", "wardCode": "0466" },
+        { "name": "Kirimukuyu", "wardCode": "0467" },
+        { "name": "Karatina Town", "wardCode": "0468" }
+      ]},
+      { "name": "Othaya", "constituencyCode": "097", "wards": [
+        { "name": "Mahiga", "wardCode": "0469" },
+        { "name": "Iria-Ini", "wardCode": "0470" },
+        { "name": "Chinga", "wardCode": "0471" },
+        { "name": "Karima", "wardCode": "0472" }
+      ]},
+      { "name": "Mukurweini", "constituencyCode": "098", "wards": [
+        { "name": "Gikondi", "wardCode": "0473" },
+        { "name": "Rugi", "wardCode": "0474" },
+        { "name": "Mukurweini West", "wardCode": "0475" },
+        { "name": "Mukurweini Central", "wardCode": "0476" }
+      ]},
+      { "name": "Nyeri Town", "constituencyCode": "099", "wards": [
+        { "name": "Kamakwa/Mukaro", "wardCode": "0477" },
+        { "name": "Rware", "wardCode": "0478" },
+        { "name": "Gatitu/Nyeri Central", "wardCode": "0479" },
+        { "name": "Ruringu", "wardCode": "0480" },
+        { "name": "Kamukunji", "wardCode": "0481" }
+      ]}
+    ]
+  },
+  {
+    "county": "Kirinyaga",
+    "countyCode": "020",
+    "constituencies": [
+      { "name": "Mwea", "constituencyCode": "100", "wards": [
+        { "name": "Mutithi", "wardCode": "0482" },
+        { "name": "Kangai", "wardCode": "0483" },
+        { "name": "Wamumu", "wardCode": "0484" },
+        { "name": "Nyangati", "wardCode": "0485" },
+        { "name": "Murinduko", "wardCode": "0486" },
+        { "name": "Gathigiriri", "wardCode": "0487" },
+        { "name": "Tebere", "wardCode": "0488" },
+        { "name": "Thiba", "wardCode": "0489" }
+      ]},
+      { "name": "Gichugu", "constituencyCode": "101", "wards": [
+        { "name": "Kabare", "wardCode": "0490" },
+        { "name": "Baragwi", "wardCode": "0491" },
+        { "name": "Njukiini", "wardCode": "0492" },
+        { "name": "Ngariama", "wardCode": "0493" },
+        { "name": "Karumandi", "wardCode": "0494" }
+      ]},
+      { "name": "Ndia", "constituencyCode": "102", "wards": [
+        { "name": "Mukure", "wardCode": "0495" },
+        { "name": "Kiine", "wardCode": "0496" },
+        { "name": "Kariti", "wardCode": "0497" }
+      ]},
+      { "name": "Kirinyaga Central", "constituencyCode": "103", "wards": [
+        { "name": "Mutira", "wardCode": "0498" },
+        { "name": "Kanyekini", "wardCode": "0499" },
+        { "name": "Kerugoya", "wardCode": "0500" },
+        { "name": "Inoi", "wardCode": "0501" },
+        { "name": "Kabir", "wardCode": "0502" }
+      ]}
+    ]
+  },
+  {
+    "county": "Murang’a",
+    "countyCode": "021",
+    "constituencies": [
+      { "name": "Kangema", "constituencyCode": "104", "wards": [
+        { "name": "Kanyenya-Ini", "wardCode": "0503" },
+        { "name": "Muguru", "wardCode": "0504" },
+        { "name": "Rwathia", "wardCode": "0505" }
+      ]},
+      { "name": "Mathioya", "constituencyCode": "105", "wards": [
+        { "name": "Gitugi", "wardCode": "0506" },
+        { "name": "Kiru", "wardCode": "0507" },
+        { "name": "Kamacharia", "wardCode": "0508" }
+      ]},
+      { "name": "Kiharu", "constituencyCode": "106", "wards": [
+        { "name": "Wangu", "wardCode": "0509" },
+        { "name": "Mugoiri", "wardCode": "0510" },
+        { "name": "Mbiri", "wardCode": "0511" },
+        { "name": "Township", "wardCode": "0512" },
+        { "name": "Murarandia", "wardCode": "0513" },
+        { "name": "Gaturi", "wardCode": "0514" }
+      ]},
+      { "name": "Kigumo", "constituencyCode": "107", "wards": [
+        { "name": "Kahumbu", "wardCode": "0515" },
+        { "name": "Muthithi", "wardCode": "0516" },
+        { "name": "Kigumo", "wardCode": "0517" },
+        { "name": "Kangari", "wardCode": "0518" },
+        { "name": "Kinyona", "wardCode": "0519" }
+      ]},
+      { "name": "Maragwa", "constituencyCode": "108", "wards": [
+        { "name": "Kimorori/Wempa", "wardCode": "0520" },
+        { "name": "Makuyu", "wardCode": "0521" },
+        { "name": "Kambiti", "wardCode": "0522" },
+        { "name": "Kamahuha", "wardCode": "0523" },
+        { "name": "Ichagaki", "wardCode": "0524" },
+        { "name": "Nginda", "wardCode": "0525" }
+      ]},
+      { "name": "Kandara", "constituencyCode": "109", "wards": [
+        { "name": "Ng’araria", "wardCode": "0526" },
+        { "name": "Muruka", "wardCode": "0527" },
+        { "name": "Kagundu-Ini", "wardCode": "0528" },
+        { "name": "Gaichanjiru", "wardCode": "0529" },
+        { "name": "Ithiru", "wardCode": "0530" },
+        { "name": "Ruchu", "wardCode": "0531" }
+      ]},
+      { "name": "Gatanga", "constituencyCode": "110", "wards": [
+        { "name": "Ithanga", "wardCode": "0532" },
+        { "name": "Kakuzi/Mitubiri", "wardCode": "0533" },
+        { "name": "Mugumo-Ini", "wardCode": "0534" },
+        { "name": "Kihumbu-Ini", "wardCode": "0535" },
+        { "name": "Gatanga", "wardCode": "0536" },
+        { "name": "Kariara", "wardCode": "0537" }
+      ]}
+    ]
+  },
+  {
+    "county": "Kiambu",
+    "countyCode": "022",
+    "constituencies": [
+      { "name": "Gatundu South", "constituencyCode": "111", "wards": [
+        { "name": "Kiamwangi", "wardCode": "0538" },
+        { "name": "Kiganjo", "wardCode": "0539" },
+        { "name": "Ndarugo", "wardCode": "0540" },
+        { "name": "Ng’enda", "wardCode": "0541" }
+      ]},
+      { "name": "Gatundu North", "constituencyCode": "112", "wards": [
+        { "name": "Gituamba", "wardCode": "0542" },
+        { "name": "Githobokoni", "wardCode": "0543" },
+        { "name": "Chania", "wardCode": "0544" },
+        { "name": "Mang’u", "wardCode": "0545" }
+      ]},
+      { "name": "Juja", "constituencyCode": "113", "wards": [
+        { "name": "Murera", "wardCode": "0546" },
+        { "name": "Theta", "wardCode": "0547" },
+        { "name": "Juja", "wardCode": "0548" },
+        { "name": "Witeithie", "wardCode": "0549" },
+        { "name": "Kalimoni", "wardCode": "0550" }
+      ]},
+      { "name": "Thika Town", "constituencyCode": "114", "wards": [
+        { "name": "Township", "wardCode": "0551" },
+        { "name": "Kamenu", "wardCode": "0552" },
+        { "name": "Hospital", "wardCode": "0553" },
+        { "name": "Gatuanyaga", "wardCode": "0554" },
+        { "name": "Ngoliba", "wardCode": "0555" }
+      ]},
+      { "name": "Ruiru", "constituencyCode": "115", "wards": [
+        { "name": "Gitothua", "wardCode": "0556" },
+        { "name": "Biashara", "wardCode": "0557" },
+        { "name": "Gatongora", "wardCode": "0558" },
+        { "name": "Kahawa Sukari", "wardCode": "0559" },
+        { "name": "Kahawa Wendani", "wardCode": "0560" },
+        { "name": "Kiuu", "wardCode": "0561" },
+        { "name": "Mwiki", "wardCode": "0562" },
+        { "name": "Mwihoko", "wardCode": "0563" }
+      ]},
+      { "name": "Githunguri", "constituencyCode": "116", "wards": [
+        { "name": "Githunguri", "wardCode": "0564" },
+        { "name": "Githiga", "wardCode": "0565" },
+        { "name": "Ikinu", "wardCode": "0566" },
+        { "name": "Ngewa", "wardCode": "0567" },
+        { "name": "Komothai", "wardCode": "0568" }
+      ]},
+      { "name": "Kiambaa", "constituencyCode": "117", "wards": [
+        { "name": "Cianda", "wardCode": "0569" },
+        { "name": "Karuri", "wardCode": "0570" },
+        { "name": "Ndenderu", "wardCode": "0571" },
+        { "name": "Muchatha", "wardCode": "0572" },
+        { "name": "Kihara", "wardCode": "0573" }
+      ]},
+      { "name": "Kabete", "constituencyCode": "118", "wards": [
+        { "name": "Gitaru", "wardCode": "0574" },
+        { "name": "Muguga", "wardCode": "0575" },
+        { "name": "Nyadhuna", "wardCode": "0576" },
+        { "name": "Kabete", "wardCode": "0577" },
+        { "name": "Uthiru", "wardCode": "0578" }
+      ]},
+      { "name": "Kikuyu", "constituencyCode": "119", "wards": [
+        { "name": "Karai", "wardCode": "0579" },
+        { "name": "Nachu", "wardCode": "0580" },
+        { "name": "Sigona", "wardCode": "0581" },
+        { "name": "Kikuyu", "wardCode": "0582" },
+        { "name": "Kinoo", "wardCode": "0583" }
+      ]},
+      { "name": "Limuru", "constituencyCode": "120", "wards": [
+        { "name": "Bibirioni", "wardCode": "0584" },
+        { "name": "Limuru Central", "wardCode": "0585" },
+        { "name": "Ndeiya", "wardCode": "0586" },
+        { "name": "Limuru East", "wardCode": "0587" },
+        { "name": "Ngecha Tigoni", "wardCode": "0588" }
+      ]},
+      { "name": "Lari", "constituencyCode": "121", "wards": [
+        { "name": "Kijabe", "wardCode": "0589" },
+        { "name": "Nyanduma", "wardCode": "0590" },
+        { "name": "Kamburu", "wardCode": "0591" },
+        { "name": "Lari/Kirenga", "wardCode": "0592" },
+        { "name": "Kinale", "wardCode": "0593" }
+      ]},
+      { "name": "Kiambu", "constituencyCode": "122", "wards": [
+        { "name": "Ting’ang’a", "wardCode": "0594" },
+        { "name": "Ndumberi", "wardCode": "0595" },
+        { "name": "Riabai", "wardCode": "0596" },
+        { "name": "Township", "wardCode": "0597" }
+      ]}
+    ]
+  },
+  {
+    "county": "Turkana",
+    "countyCode": "023",
+    "constituencies": [
+      { "name": "Turkana North", "constituencyCode": "123", "wards": [
+        { "name": "Kaeris", "wardCode": "0598" },
+        { "name": "Lake Zone", "wardCode": "0599" },
+        { "name": "Lapur", "wardCode": "0600" },
+        { "name": "Kaaleng/Kaikor", "wardCode": "0601" },
+        { "name": "Kibish", "wardCode": "0602" },
+        { "name": "Nakalale", "wardCode": "0603" }
+      ]},
+      { "name": "Turkana West", "constituencyCode": "124", "wards": [
+        { "name": "Kakuma", "wardCode": "0604" },
+        { "name": "Lopur", "wardCode": "0605" },
+        { "name": "Letea", "wardCode": "0606" },
+        { "name": "Songot", "wardCode": "0607" },
+        { "name": "Kalobeyei", "wardCode": "0608" },
+        { "name": "Lokichoggio", "wardCode": "0609" },
+        { "name": "Nanaam", "wardCode": "0610" }
+      ]},
+      { "name": "Turkana Central", "constituencyCode": "125", "wards": [
+        { "name": "Kerio Delta", "wardCode": "0611" },
+        { "name": "Kang’atotha", "wardCode": "0612" },
+        { "name": "Kalokol", "wardCode": "0613" },
+        { "name": "Lodwar Township", "wardCode": "0614" },
+        { "name": "Kanamkemer", "wardCode": "0615" }
+      ]},
+      { "name": "Loima", "constituencyCode": "126", "wards": [
+        { "name": "Kotaruk/Lobei", "wardCode": "0616" },
+        { "name": "Turkwel", "wardCode": "0617" },
+        { "name": "Loima", "wardCode": "0618" },
+        { "name": "Lokiriama/Lorenipp", "wardCode": "0619" }
+      ]},
+      { "name": "Turkana South", "constituencyCode": "127", "wards": [
+        { "name": "Katilu", "wardCode": "0620" },
+        { "name": "Lobokat", "wardCode": "0621" },
+        { "name": "Kalapata", "wardCode": "0622" },
+        { "name": "Lokichar", "wardCode": "0623" },
+        { "name": "Kaputir", "wardCode": "0624" }
+      ]},
+      { "name": "Turkana East", "constituencyCode": "128", "wards": [
+        { "name": "Kapedo/Napeitom", "wardCode": "0625" },
+        { "name": "Katilia", "wardCode": "0626" },
+        { "name": "Lokori/Kochodin", "wardCode": "0627" }
+      ]}
+    ]
+  },
+  {
+    "county": "West Pokot",
+    "countyCode": "024",
+    "constituencies": [
+      { "name": "Kapenguria", "constituencyCode": "129", "wards": [
+        { "name": "Mnagei", "wardCode": "0628" },
+        { "name": "Kapenguria", "wardCode": "0629" },
+        { "name": "Riwo", "wardCode": "0630" },
+        { "name": "Siyoi", "wardCode": "0631" },
+        { "name": "Endugh", "wardCode": "0632" },
+        { "name": "Sook", "wardCode": "0633" }
+      ]},
+      { "name": "Kacheliba", "constituencyCode": "130", "wards": [
+        { "name": "Suam", "wardCode": "0634" },
+        { "name": "Kodich", "wardCode": "0635" },
+        { "name": "Kasei", "wardCode": "0636" },
+        { "name": "Kapchok", "wardCode": "0637" },
+        { "name": "Chepareria", "wardCode": "0638" },
+        { "name": "Alale", "wardCode": "0639" }
+      ]},
+      { "name": "Sigor", "constituencyCode": "131", "wards": [
+        { "name": "Sekerr", "wardCode": "0640" },
+        { "name": "Masool", "wardCode": "0641" },
+        { "name": "Lomut", "wardCode": "0642" },
+        { "name": "Weiwei", "wardCode": "0643" }
+      ]},
+      { "name": "Pokot South", "constituencyCode": "132", "wards": [
+        { "name": "Cheptulel", "wardCode": "0644" },
+        { "name": "Lelan", "wardCode": "0645" },
+        { "name": "Batei", "wardCode": "0646" },
+        { "name": "Tapach", "wardCode": "0647" }
+      ]}
+    ]
+  },
+  {
+    "county": "Samburu",
+    "countyCode": "025",
+    "constituencies": [
+      { "name": "Samburu West", "constituencyCode": "133", "wards": [
+        { "name": "Lodokejek", "wardCode": "0648" },
+        { "name": "Suguta Marmar", "wardCode": "0649" },
+        { "name": "Maralal", "wardCode": "0650" },
+        { "name": "Loosuk", "wardCode": "0651" },
+        { "name": "Porro", "wardCode": "0652" }
+      ]},
+      { "name": "Samburu North", "constituencyCode": "134", "wards": [
+        { "name": "El Barta", "wardCode": "0653" },
+        { "name": "Nachola", "wardCode": "0654" },
+        { "name": "Ndoto", "wardCode": "0655" },
+        { "name": "Nyiro", "wardCode": "0656" },
+        { "name": "Angata Nanyokie", "wardCode": "0657" },
+        { "name": "Baawa", "wardCode": "0658" }
+      ]},
+      { "name": "Samburu East", "constituencyCode": "135", "wards": [
+        { "name": "Waso", "wardCode": "0659" },
+        { "name": "Wamba West", "wardCode": "0660" },
+        { "name": "Wamba East", "wardCode": "0661" },
+        { "name": "Wamba North", "wardCode": "0662" }
+      ]}
+    ]
+  },
+  {
+    "county": "Trans Nzoia",
+    "countyCode": "026",
+    "constituencies": [
+      { "name": "Kwanza", "constituencyCode": "136", "wards": [
+        { "name": "Kapomboi", "wardCode": "0663" },
+        { "name": "Kwanza", "wardCode": "0664" },
+        { "name": "Keiyo", "wardCode": "0665" },
+        { "name": "Bidii", "wardCode": "0666" }
+      ]},
+      { "name": "Endebess", "constituencyCode": "137", "wards": [
+        { "name": "Endebess", "wardCode": "0667" },
+        { "name": "Chepchoina", "wardCode": "0668" },
+        { "name": "Matumbei", "wardCode": "0669" }
+      ]},
+      { "name": "Saboti", "constituencyCode": "138", "wards": [
+        { "name": "Kinyoro", "wardCode": "0670" },
+        { "name": "Matisi", "wardCode": "0671" },
+        { "name": "Tuwani", "wardCode": "0672" },
+        { "name": "Saboti", "wardCode": "0673" },
+        { "name": "Machewa", "wardCode": "0674" }
+      ]},
+      { "name": "Kiminini", "constituencyCode": "139", "wards": [
+        { "name": "Kiminini", "wardCode": "0675" },
+        { "name": "Waitaluk", "wardCode": "0676" },
+        { "name": "Sirende", "wardCode": "0677" },
+        { "name": "Hospital", "wardCode": "0678" },
+        { "name": "Sikhendu", "wardCode": "0679" },
+        { "name": "Nabiswa", "wardCode": "0680" }
+      ]},
+      { "name": "Cherangany", "constituencyCode": "140", "wards": [
+        { "name": "Sinyerere", "wardCode": "0681" },
+        { "name": "Makutano", "wardCode": "0682" },
+        { "name": "Kaplamai", "wardCode": "0683" },
+        { "name": "Motosiet", "wardCode": "0684" },
+        { "name": "Cherangany/Suwerwa", "wardCode": "0685" },
+        { "name": "Chepsiro/Kiptoror", "wardCode": "0686" },
+        { "name": "Sitatunga", "wardCode": "0687" }
+      ]}
+    ]
+  },
+  {
+    "county": "Uasin Gishu",
+    "countyCode": "027",
+    "constituencies": [
+      { "name": "Soy", "constituencyCode": "141", "wards": [
+        { "name": "Moi’s Bridge", "wardCode": "0688" },
+        { "name": "Kapkures", "wardCode": "0689" },
+        { "name": "Ziwa", "wardCode": "0690" },
+        { "name": "Segero/Barsombe", "wardCode": "0691" },
+        { "name": "Kipsomba", "wardCode": "0692" },
+        { "name": "Soy", "wardCode": "0693" },
+        { "name": "Kuinet/Kapsuswa", "wardCode": "0694" }
+      ]},
+      { "name": "Turbo", "constituencyCode": "142", "wards": [
+        { "name": "Ngenyilel", "wardCode": "0695" },
+        { "name": "Tapsagoi", "wardCode": "0696" },
+        { "name": "Kamagut", "wardCode": "0697" },
+        { "name": "Kiplombe", "wardCode": "0698" },
+        { "name": "Kaptagat", "wardCode": "0699" },
+        { "name": "Kipkaren", "wardCode": "0700" }
+      ]},
+      { "name": "Moiben", "constituencyCode": "143", "wards": [
+        { "name": "Tembelio", "wardCode": "0701" },
+        { "name": "Sergoit", "wardCode": "0702" },
+        { "name": "Karuna/Meibeki", "wardCode": "0703" },
+        { "name": "Moiben", "wardCode": "0704" },
+        { "name": "Kimumu", "wardCode": "0705" }
+      ]},
+      { "name": "Ainabkoi", "constituencyCode": "144", "wards": [
+        { "name": "Kapsoya", "wardCode": "0706" },
+        { "name": "Kaptagat", "wardCode": "0707" },
+        { "name": "Ainabkoi/Olare", "wardCode": "0708" }
+      ]},
+      { "name": "Kapseret", "constituencyCode": "145", "wards": [
+        { "name": "Simat/Kapseret", "wardCode": "0709" },
+        { "name": "Ngeria", "wardCode": "0710" },
+        { "name": "Megun", "wardCode": "0711" },
+        { "name": "Langas", "wardCode": "0712" },
+        { "name": "Kipkenyo", "wardCode": "0713" }
+      ]},
+      { "name": "Kesses", "constituencyCode": "146", "wards": [
+        { "name": "Racecourse", "wardCode": "0714" },
+        { "name": "Cheptiret/Kipchamo", "wardCode": "0715" },
+        { "name": "Tulwet/Chuiyat", "wardCode": "0716" },
+        { "name": "Tarakwa", "wardCode": "0717" }
+      ]}
+    ]
+  },
+  {
+    "county": "Nandi",
+    "countyCode": "028",
+    "constituencies": [
+      { "name": "Tinderet", "constituencyCode": "147", "wards": [
+        { "name": "Songhor/Soba", "wardCode": "0718" },
+        { "name": "Tindiret", "wardCode": "0719" },
+        { "name": "Chemelil/Chemase", "wardCode": "0720" },
+        { "name": "Kapsimotwo", "wardCode": "0721" }
+      ]},
+      { "name": "Aldai", "constituencyCode": "148", "wards": [
+        { "name": "Kabwareng", "wardCode": "0722" },
+        { "name": "Terik", "wardCode": "0723" },
+        { "name": "Kemeloi-Maraba", "wardCode": "0724" },
+        { "name": "Kobujoi", "wardCode": "0725" },
+        { "name": "Kaptumo-Kaboi", "wardCode": "0726" },
+        { "name": "Koyo-Ndurio", "wardCode": "0727" }
+      ]},
+      { "name": "Nandi Hills", "constituencyCode": "149", "wards": [
+        { "name": "Nandi Hills", "wardCode": "0728" },
+        { "name": "Chepkunyuk", "wardCode": "0729" },
+        { "name": "Ol’lessos", "wardCode": "0730" },
+        { "name": "Kapchorua", "wardCode": "0731" }
+      ]},
+      { "name": "Chesumei", "constituencyCode": "150", "wards": [
+        { "name": "Chemundu/Kapng’etuny", "wardCode": "0732" },
+        { "name": "Kosirai", "wardCode": "0733" },
+        { "name": "Lelmokwo/Ngechek", "wardCode": "0734" },
+        { "name": "Kaptel/Kamoiywo", "wardCode": "0735" },
+        { "name": "Kiptuiya", "wardCode": "0736" }
+      ]},
+      { "name": "Emgwen", "constituencyCode": "151", "wards": [
+        { "name": "Kiamamang", "wardCode": "0737" },
+        { "name": "Kapsabet", "wardCode": "0738" },
+        { "name": "Kilibwoni", "wardCode": "0739" },
+        { "name": "Chepterwai", "wardCode": "0740" }
+      ]},
+      { "name": "Mosop", "constituencyCode": "152", "wards": [
+        { "name": "Chepterit", "wardCode": "0741" },
+        { "name": "Kipkaren", "wardCode": "0742" },
+        { "name": "Kurgung/Surungai", "wardCode": "0743" },
+        { "name": "Kabiyet", "wardCode": "0744" },
+        { "name": "Ndalat", "wardCode": "0745" },
+        { "name": "Kabirokwa/Kapchumba", "wardCode": "0746" },
+        { "name": "Sangalo/Kebulonik", "wardCode": "0747" }
+      ]}
+    ]
+  },
+  {
+    "county": "Baringo",
+    "countyCode": "029",
+    "constituencies": [
+      { "name": "Tiaty", "constituencyCode": "153", "wards": [
+        { "name": "Tirioko", "wardCode": "0748" },
+        { "name": "Kolowa", "wardCode": "0749" },
+        { "name": "Ribkwo", "wardCode": "0750" },
+        { "name": "Silale", "wardCode": "0751" },
+        { "name": "Loiyamorok", "wardCode": "0752" },
+        { "name": "Tangulbei/Korossi", "wardCode": "0753" },
+        { "name": "Churo/Amaya", "wardCode": "0754" }
+      ]},
+      { "name": "Baringo North", "constituencyCode": "154", "wards": [
+        { "name": "Barwessa", "wardCode": "0755" },
+        { "name": "Kabartonjo", "wardCode": "0756" },
+        { "name": "Saimo/Kipsaraman", "wardCode": "0757" },
+        { "name": "Saimo/Soi", "wardCode": "0758" },
+        { "name": "Bartabwa", "wardCode": "0759" }
+      ]},
+      { "name": "Baringo Central", "constituencyCode": "155", "wards": [
+        { "name": "Kabarnet", "wardCode": "0760" },
+        { "name": "Sacho", "wardCode": "0761" },
+        { "name": "Tenges", "wardCode": "0762" },
+        { "name": "Ewalel/Chapchap", "wardCode": "0763" },
+        { "name": "Kapropita", "wardCode": "0764" }
+      ]},
+      { "name": "Baringo South", "constituencyCode": "156", "wards": [
+        { "name": "Marigat", "wardCode": "0765" },
+        { "name": "Ilchamus", "wardCode": "0766" },
+        { "name": "Mochongoi", "wardCode": "0767" },
+        { "name": "Mukutani", "wardCode": "0768" }
+      ]},
+      { "name": "Mogotio", "constituencyCode": "157", "wards": [
+        { "name": "Mogotio", "wardCode": "0769" },
+        { "name": "Emsos", "wardCode": "0770" },
+        { "name": "Kiamgose", "wardCode": "0771" }
+      ]},
+      { "name": "Eldama Ravine", "constituencyCode": "158", "wards": [
+        { "name": "Lembus", "wardCode": "0772" },
+        { "name": "Lembus Kwen", "wardCode": "0773" },
+        { "name": "Ravine", "wardCode": "0774" },
+        { "name": "Mumberes/Maji Mazuri", "wardCode": "0775" },
+        { "name": "Lembus/Perkerra", "wardCode": "0776" },
+        { "name": "Koibatek", "wardCode": "0777" }
+      ]}
+    ]
+  },
+  {
+    "county": "Laikipia",
+    "countyCode": "030",
+    "constituencies": [
+      { "name": "Laikipia West", "constituencyCode": "159", "wards": [
+        { "name": "Ol-Moran", "wardCode": "0778" },
+        { "name": "Rumuruti Township", "wardCode": "0779" },
+        { "name": "Kinamba", "wardCode": "0780" },
+        { "name": "Marmanet", "wardCode": "0781" },
+        { "name": "Igwamiti", "wardCode": "0782" },
+        { "name": "Salama", "wardCode": "0783" }
+      ]},
+      { "name": "Laikipia East", "constituencyCode": "160", "wards": [
+        { "name": "Ngobit", "wardCode": "0784" },
+        { "name": "Tigithi", "wardCode": "0785" },
+        { "name": "Thingithu", "wardCode": "0786" },
+        { "name": "Nanyuki", "wardCode": "0787" },
+        { "name": "Umande", "wardCode": "0788" }
+      ]},
+      { "name": "Laikipia North", "constituencyCode": "161", "wards": [
+        { "name": "Sosian", "wardCode": "0789" },
+        { "name": "Segera", "wardCode": "0790" },
+        { "name": "Mukogodo East", "wardCode": "0791" },
+        { "name": "Mukogodo West", "wardCode": "0792" }
+      ]}
+    ]
+  },
+  {
+    "county": "Nakuru",
+    "countyCode": "031",
+    "constituencies": [
+      { "name": "Molo", "constituencyCode": "162", "wards": [
+        { "name": "Mariashoni", "wardCode": "0793" },
+        { "name": "Elburgon", "wardCode": "0794" },
+        { "name": "Turi", "wardCode": "0795" },
+        { "name": "Molo", "wardCode": "0796" }
+      ]},
+      { "name": "Njoro", "constituencyCode": "163", "wards": [
+        { "name": "Mau Narok", "wardCode": "0797" },
+        { "name": "Mauche", "wardCode": "0798" },
+        { "name": "Kihingo", "wardCode": "0799" },
+        { "name": "Nessuit", "wardCode": "0800" },
+        { "name": "Lare", "wardCode": "0801" },
+        { "name": "Njoro", "wardCode": "0802" }
+      ]},
+      { "name": "Naivasha", "constituencyCode": "164", "wards": [
+        { "name": "Biashara", "wardCode": "0803" },
+        { "name": "Hells Gate", "wardCode": "0804" },
+        { "name": "Lake View", "wardCode": "0805" },
+        { "name": "Maiella", "wardCode": "0806" },
+        { "name": "Maai Mahiu", "wardCode": "0807" },
+        { "name": "Olkaria", "wardCode": "0808" },
+        { "name": "Naivasha East", "wardCode": "0809" },
+        { "name": "Vi Wandani", "wardCode": "0810" }
+      ]},
+      { "name": "Gilgil", "constituencyCode": "165", "wards": [
+        { "name": "Gilgil", "wardCode": "0811" },
+        { "name": "Elementaita", "wardCode": "0812" },
+        { "name": "Mbaruk/Eburu", "wardCode": "0813" },
+        { "name": "Malewa West", "wardCode": "0814" },
+        { "name": "Murindati", "wardCode": "0815" }
+      ]},
+      { "name": "Kuresoi South", "constituencyCode": "166", "wards": [
+        { "name": "Amalo", "wardCode": "0816" },
+        { "name": "Keringet", "wardCode": "0817" },
+        { "name": "Kiptagich", "wardCode": "0818" },
+        { "name": "Kiptororo", "wardCode": "0819" }
+      ]},
+      { "name": "Kuresoi North", "constituencyCode": "167", "wards": [
+        { "name": "Nyota", "wardCode": "0820" },
+        { "name": "Sirikwa", "wardCode": "0821" },
+        { "name": "Kamara", "wardCode": "0822" },
+        { "name": "Kiptororo", "wardCode": "0823" }
+      ]},
+      { "name": "Subukia", "constituencyCode": "168", "wards": [
+        { "name": "Subukia", "wardCode": "0824" },
+        { "name": "Waseges", "wardCode": "0825" },
+        { "name": "Kabazi", "wardCode": "0826" }
+      ]},
+      { "name": "Rongai", "constituencyCode": "169", "wards": [
+        { "name": "Menengai West", "wardCode": "0827" },
+        { "name": "Soin", "wardCode": "0828" },
+        { "name": "Visoi", "wardCode": "0829" },
+        { "name": "Mosop", "wardCode": "0830" },
+        { "name": "Solai", "wardCode": "0831" }
+      ]},
+      { "name": "Bahati", "constituencyCode": "170", "wards": [
+        { "name": "Dundori", "wardCode": "0832" },
+        { "name": "Kabatini", "wardCode": "0833" },
+        { "name": "Kiamaina", "wardCode": "0834" },
+        { "name": "Lanet/Umoja", "wardCode": "0835" },
+        { "name": "Bahati", "wardCode": "0836" }
+      ]},
+      { "name": "Nakuru Town West", "constituencyCode": "171", "wards": [
+        { "name": "Barut", "wardCode": "0837" },
+        { "name": "London", "wardCode": "0838" },
+        { "name": "Kaptembwo", "wardCode": "0839" },
+        { "name": "Kapkures", "wardCode": "0840" },
+        { "name": "Rhoda", "wardCode": "0841" },
+        { "name": "Shaabab", "wardCode": "0842" }
+      ]},
+      { "name": "Nakuru Town East", "constituencyCode": "172", "wards": [
+        { "name": "Biashara", "wardCode": "0843" },
+        { "name": "Kivumbini", "wardCode": "0844" },
+        { "name": "Flamingo", "wardCode": "0845" },
+        { "name": "Menengai", "wardCode": "0846" },
+        { "name": "Nakuru East", "wardCode": "0847" }
+      ]}
+    ]
+  },
+  {
+    "county": "Narok",
+    "countyCode": "032",
+    "constituencies": [
+      { "name": "Kilgoris", "constituencyCode": "173", "wards": [
+        { "name": "Kilgoris Central", "wardCode": "0848" },
+        { "name": "Keyian", "wardCode": "0849" },
+        { "name": "Angata Barikoi", "wardCode": "0850" },
+        { "name": "Shankoe", "wardCode": "0851" },
+        { "name": "Kimintet", "wardCode": "0852" },
+        { "name": "Lolgorian", "wardCode": "0853" }
+      ]},
+      { "name": "Emurua Dikirr", "constituencyCode": "174", "wards": [
+        { "name": "Ilkerin", "wardCode": "0854" },
+        { "name": "Ololmasani", "wardCode": "0855" },
+        { "name": "Mogondo", "wardCode": "0856" },
+        { "name": "Kapsasian", "wardCode": "0857" }
+      ]},
+      { "name": "Narok North", "constituencyCode": "175", "wards": [
+        { "name": "Olpusimoru", "wardCode": "0858" },
+        { "name": "Olokurto", "wardCode": "0859" },
+        { "name": "Narok Town", "wardCode": "0860" },
+        { "name": "Nkareta", "wardCode": "0861" },
+        { "name": "Olorropil", "wardCode": "0862" },
+        { "name": "Melili", "wardCode": "0863" }
+      ]},
+      { "name": "Narok East", "constituencyCode": "176", "wards": [
+        { "name": "Mosiro", "wardCode": "0864" },
+        { "name": "Ildamat", "wardCode": "0865" },
+        { "name": "Keekonyokie", "wardCode": "0866" },
+        { "name": "Suswa", "wardCode": "0867" }
+      ]},
+      { "name": "Narok South", "constituencyCode": "177", "wards": [
+        { "name": "Majimoto/Naroosura", "wardCode": "0868" },
+        { "name": "Ololulunga", "wardCode": "0869" },
+        { "name": "Melelo", "wardCode": "0870" },
+        { "name": "Loita", "wardCode": "0871" },
+        { "name": "Sogoo", "wardCode": "0872" },
+        { "name": "Sagamian", "wardCode": "0873" }
+      ]},
+      { "name": "Narok West", "constituencyCode": "178", "wards": [
+        { "name": "Ilmotiok", "wardCode": "0874" },
+        { "name": "Mara", "wardCode": "0875" },
+        { "name": "Siana", "wardCode": "0876" },
+        { "name": "Naikarra", "wardCode": "0877" }
+      ]}
+    ]
+  }
+]
