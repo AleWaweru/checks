@@ -9,6 +9,7 @@ import {
 import type { RootState, AppDispatch } from "../redux/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { Menu, X } from "lucide-react";
+import toast from "react-hot-toast";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -29,24 +30,19 @@ const AdminDashboard: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    if (!user) {
-      navigate("/login");
-      return;
-    }
-
-    if (user.role !== "admin") {
-      navigate("/home");
-      return;
-    }
-
-    dispatch(fetchLeaders());
-  }, [dispatch, user, navigate]);
+  const fetchData = async () => {
+    if (!user) return navigate("/login");
+    if (user.role !== "admin") return navigate("/home");
+    await dispatch(fetchLeaders());
+  };
+  fetchData();
+}, [dispatch, user, navigate]);
 
   const getParam = (key: string) => searchParams.get(key) || "";
   const setParam = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
-    if (value) newParams.set(key, value);
-    else newParams.delete(key);
+    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+    value ? newParams.set(key, value) : newParams.delete(key);
     setSearchParams(newParams);
   };
 
@@ -81,25 +77,48 @@ const AdminDashboard: React.FC = () => {
     setEditedName(name);
   };
 
-  const handleSave = (id: string) => {
-    if (editedName.trim() !== "") {
-      const confirmed = window.confirm(
-        "Are you sure you want to save changes?"
-      );
-      if (confirmed) {
-        dispatch(updateLeader({ id, data: { name: editedName } }));
+  const handleSave = async (id: string) => {
+    if (!editedName.trim()) return;
+
+    toast.promise(
+      dispatch(updateLeader({ id, data: { name: editedName } }))
+        .unwrap()
+        .then(() => setEditId(null)),
+      {
+        loading: "Saving changes...",
+        success: "Leader updated successfully!",
+        error: (err) => err || "Failed to update leader",
       }
-    }
-    setEditId(null);
+    );
   };
 
   const handleDelete = (id: string) => {
-    const confirmed = window.confirm(
-      "Are you sure you want to delete this leader?"
-    );
-    if (confirmed) {
-      dispatch(deleteLeader(id));
-    }
+    toast((t) => (
+      <span>
+        Confirm delete?
+        <div className="mt-2 flex gap-2">
+          <button
+            onClick={() => {
+              toast.dismiss(t.id);
+              toast.promise(dispatch(deleteLeader(id)).unwrap(), {
+                loading: "Deleting...",
+                success: "Leader deleted successfully!",
+                error: (err) => err || "Failed to delete leader",
+              });
+            }}
+            className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 text-xs rounded"
+          >
+            Yes
+          </button>
+          <button
+            onClick={() => toast.dismiss(t.id)}
+            className="bg-gray-300 hover:bg-gray-400 text-black px-2 py-1 text-xs rounded"
+          >
+            Cancel
+          </button>
+        </div>
+      </span>
+    ));
   };
 
   const extractUnique = (field: keyof (typeof leaders)[0]) =>
@@ -134,7 +153,9 @@ const AdminDashboard: React.FC = () => {
                 setSidebarOpen(false);
               }}
               className={`text-left px-3 py-2 rounded-md transition-all duration-200 capitalize font-medium ${
-                activeTab === tab ? "bg-green-100 text-green-700" : "hover:bg-gray-100 text-gray-800"
+                activeTab === tab
+                  ? "bg-green-100 text-green-700"
+                  : "hover:bg-gray-100 text-gray-800"
               }`}
             >
               {tab === "mp" ? "Members of Parliament" : tab.toUpperCase() + "s"}
