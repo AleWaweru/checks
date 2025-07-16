@@ -4,8 +4,9 @@ import { useDispatch } from "react-redux";
 import type { AppDispatch } from "../../redux/store";
 import { createLeader } from "../../redux/reducers/leadersSlice";
 import { RegionalData } from "../../utils/Regions/KenyanRegions";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { getManifestoTopics } from "./manifestoTopic";
+import toast from "react-hot-toast";
 
 const CreateLeaderForm: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -16,6 +17,8 @@ const CreateLeaderForm: React.FC = () => {
   const [selectedCounty, setSelectedCounty] = useState("");
   const [selectedConstituency, setSelectedConstituency] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
+
+  const navigate = useNavigate();
   const handlePositionChange = (pos: string) => {
     setPosition(pos);
     setSelectedCounty("");
@@ -52,13 +55,14 @@ const CreateLeaderForm: React.FC = () => {
 
     try {
       await dispatch(createLeader(payload)).unwrap();
-      alert("Leader created successfully!");
+      toast.success("Leader created successfully!");
       setName("");
       setPosition("");
       setLevel("county");
       setSelectedCounty("");
       setSelectedConstituency("");
       setSelectedWard("");
+      navigate("/admin");
     } catch (err: any) {
       if (err?.message?.includes("Leader already exists")) {
         alert("Leader already exists for this region and position.");
@@ -80,7 +84,7 @@ const CreateLeaderForm: React.FC = () => {
   return (
     <div className="bg-white p-8 shadow rounded-md w-full max-w-xl mx-auto mt-10">
       <Link
-        to="/home"
+        to="/admin"
         className="inline-block bg-[#007E66] text-white px-4 py-2 rounded hover:bg-green-700 transition duration-200 shadow"
       >
         Home

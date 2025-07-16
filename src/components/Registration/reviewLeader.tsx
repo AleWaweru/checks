@@ -5,8 +5,8 @@ import axios from "axios";
 import { useSelector } from "react-redux";
 import type { RootState } from "../../redux/store";
 import { getManifestoTopics } from "./manifestoTopic";
+import toast from "react-hot-toast";
 
-// -------------------- Types --------------------
 interface ManifestoItem {
   title: string;
   description?: string;
@@ -31,7 +31,6 @@ const sentimentMap: Record<number, string> = {
   1: "Poor",
 };
 
-// -------------------- Component --------------------
 const LeaderReview: React.FC<Props> = ({ leader }) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [ratings, setRatings] = useState<Record<string, number>>({});
@@ -39,7 +38,6 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
   const [loading, setLoading] = useState(false);
   const [nextReviewDate, setNextReviewDate] = useState<Date | null>(null);
 
-  // -------------------- Fetch Existing Review --------------------
   const fetchExistingReview = async () => {
     if (!leader?._id || !user?._id) return;
 
@@ -80,7 +78,6 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
     fetchExistingReview();
   }, [leader._id, user?._id]);
 
-  // -------------------- Rating Handler --------------------
   const handleRatingChange = (title: string, rating: number) => {
     setRatings((prev) => ({
       ...prev,
@@ -88,7 +85,6 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
     }));
   };
 
-  // -------------------- Submit Handler --------------------
   const handleSubmit = async () => {
     setLoading(true);
     try {
@@ -97,9 +93,13 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
         userId: user?._id,
         ratings,
       });
+      toast.success("Review submitted successfully!");
       setSubmitted(true);
       setNextReviewDate(null);
-      fetchExistingReview(); // refresh
+      fetchExistingReview();
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     } catch (error: any) {
       if (
         error.response?.status === 409 &&
@@ -108,9 +108,9 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
         const date = new Date(error.response.data.nextReviewDate);
         console.log("Next review date:", date);
         setNextReviewDate(date);
-        setSubmitted(true); // <-- this is the key
+        setSubmitted(true);
       } else {
-        console.error("Failed to submit review:", error);
+        toast.error("Failed to submit review:", error);
       }
     } finally {
       setLoading(false);
@@ -122,7 +122,7 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
   return (
     <div className="bg-white p-4 sm:p-6 rounded shadow mt-8 w-full max-w-3xl mx-auto">
       <h3 className="text-lg sm:text-xl font-semibold text-gray-800 mb-4 text-center sm:text-left">
-        Rate {leader.name}'s Manifesto Performance
+        Rate <b>{leader.name}</b>'s Leadership Performance
       </h3>
 
       {!submitted ? (

@@ -1,24 +1,25 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState } from 'react';
-import { RegionalData } from '../../utils/Regions/KenyanRegions';
-import { useDispatch } from 'react-redux';
-import { registerUser } from '../../redux/reducers/authSlice';
-import type { AppDispatch } from '../../redux/store';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { RegionalData } from "../../utils/Regions/KenyanRegions";
+import { useDispatch } from "react-redux";
+import { registerUser } from "../../redux/reducers/authSlice";
+import type { AppDispatch } from "../../redux/store";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Register: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(false);
-  const [selectedCounty, setSelectedCounty] = useState('');
-  const [selectedConstituency, setSelectedConstituency] = useState('');
-  const [selectedWard, setSelectedWard] = useState('');
+  const [selectedCounty, setSelectedCounty] = useState("");
+  const [selectedConstituency, setSelectedConstituency] = useState("");
+  const [selectedWard, setSelectedWard] = useState("");
   const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
   });
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -28,13 +29,15 @@ const Register: React.FC = () => {
 
   const handleCountyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setSelectedCounty(e.target.value);
-    setSelectedConstituency('');
-    setSelectedWard('');
+    setSelectedConstituency("");
+    setSelectedWard("");
   };
 
-  const handleConstituencyChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+  const handleConstituencyChange = (
+    e: React.ChangeEvent<HTMLSelectElement>
+  ) => {
     setSelectedConstituency(e.target.value);
-    setSelectedWard('');
+    setSelectedWard("");
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -49,18 +52,21 @@ const Register: React.FC = () => {
           constituency: selectedConstituency,
           ward: selectedWard,
         })
-      ).unwrap(); // if using createAsyncThunk
-      alert('Registration successful!');
-      navigate('/login');
+      ).unwrap();
+      toast.success("Registration successful!");
+      setTimeout(() => {
+        navigate("/login");
+      }, 2000);
     } catch (error: any) {
-      alert(error.message || 'Something went wrong. Please try again.');
+      alert(error.message || "Something went wrong. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
   const constituencies = selectedCounty
-    ? RegionalData.find((c) => c.county === selectedCounty)?.constituencies || []
+    ? RegionalData.find((c) => c.county === selectedCounty)?.constituencies ||
+      []
     : [];
 
   const wards = selectedConstituency
@@ -70,10 +76,14 @@ const Register: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Registration Form</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">
+          Registration Form
+        </h2>
         <form className="space-y-4" onSubmit={handleSubmit}>
           <div>
-            <label className="block text-sm font-medium text-gray-700">First Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              First Name
+            </label>
             <input
               type="text"
               name="firstName"
@@ -84,7 +94,9 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Last Name</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Last Name
+            </label>
             <input
               type="text"
               name="lastName"
@@ -95,7 +107,9 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -106,7 +120,9 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -117,7 +133,9 @@ const Register: React.FC = () => {
             />
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">County</label>
+            <label className="block text-sm font-medium text-gray-700">
+              County
+            </label>
             <select
               value={selectedCounty}
               onChange={handleCountyChange}
@@ -133,7 +151,9 @@ const Register: React.FC = () => {
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Constituency</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Constituency
+            </label>
             <select
               value={selectedConstituency}
               onChange={handleConstituencyChange}
@@ -143,14 +163,19 @@ const Register: React.FC = () => {
             >
               <option value="">Select Constituency</option>
               {constituencies.map((constituency) => (
-                <option key={constituency.constituencyCode} value={constituency.name}>
+                <option
+                  key={constituency.constituencyCode}
+                  value={constituency.name}
+                >
                   {constituency.name}
                 </option>
               ))}
             </select>
           </div>
           <div>
-            <label className="block text-sm font-medium text-gray-700">Ward</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Ward
+            </label>
             <select
               value={selectedWard}
               onChange={(e) => setSelectedWard(e.target.value)}
@@ -171,11 +196,11 @@ const Register: React.FC = () => {
             disabled={loading}
             className="w-full bg-indigo-600 text-white py-2 px-4 rounded-md hover:bg-indigo-700"
           >
-            {loading ? 'Processing...' : 'Register'}
+            {loading ? "Processing..." : "Register"}
           </button>
         </form>
         <p className="text-sm text-center mt-4">
-          Already have an account?{' '}
+          Already have an account?{" "}
           <Link to="/login" className="text-indigo-600 hover:underline">
             Login here
           </Link>

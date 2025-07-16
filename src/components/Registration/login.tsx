@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import type { AppDispatch, RootState } from '../../redux/store';
-import { loginUser } from '../../redux/reducers/authSlice';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../redux/store";
+import { loginUser } from "../../redux/reducers/authSlice";
+import { Link, useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
-  const { loading, error} = useSelector((state: RootState) => state.auth);
+  const { loading, error } = useSelector((state: RootState) => state.auth);
 
   const [formData, setFormData] = useState({
-    email: '',
-    password: '',
+    email: "",
+    password: "",
   });
 
   const [success, setSuccess] = useState(false);
@@ -21,18 +22,24 @@ const Login: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  const resultAction = await dispatch(loginUser(formData));
+  if (loginUser.fulfilled.match(resultAction)) {
+    const user = resultAction.payload.user; 
+    setSuccess(true);
+    toast.success("Login successful!");
 
-    const resultAction = await dispatch(loginUser(formData));
-
-    if (loginUser.fulfilled.match(resultAction)) {
-      setSuccess(true);
-      setTimeout(() => {
+    setTimeout(() => {
+      if (user.role === "admin") {
+        navigate("/redirect");
+      } else {
         navigate("/home");
-      }, 1500); // wait a bit before navigating to show success message
-    }
-  };
+      }
+    }, 1500);
+  }
+};
+
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -40,11 +47,17 @@ const Login: React.FC = () => {
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
         {error && <p className="text-red-500 mb-4 text-center">{error}</p>}
-        {success && <p className="text-green-600 mb-4 text-center">Login successful! Redirecting...</p>}
+        {success && (
+          <p className="text-green-600 mb-4 text-center">
+            Login successful! Redirecting...
+          </p>
+        )}
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm font-medium text-gray-700">Email</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Email
+            </label>
             <input
               type="email"
               name="email"
@@ -56,7 +69,9 @@ const Login: React.FC = () => {
           </div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-700">Password</label>
+            <label className="block text-sm font-medium text-gray-700">
+              Password
+            </label>
             <input
               type="password"
               name="password"
@@ -102,7 +117,7 @@ const Login: React.FC = () => {
         </form>
 
         <p className="text-sm text-center mt-4">
-          Don’t have an account?{' '}
+          Don’t have an account?{" "}
           <Link to="/register" className="text-indigo-600 hover:underline">
             Register here
           </Link>

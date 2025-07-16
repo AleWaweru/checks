@@ -84,7 +84,6 @@ export const createLeader = createAsyncThunk<
   try {
     const state: RootState = getState();
     const token = state.auth.token;
-    console.log("token", token);
 
     const response = await axios.post(
       "http://localhost:5000/api/leaders",
@@ -113,8 +112,8 @@ export const updateLeader = createAsyncThunk<
   try {
     const token = getState().auth.token;
 
-    const response = await axios.put(
-      `http://localhost:5000/api/leaders/getById/${id}`,
+   const response = await axios.put(
+  `http://localhost:5000/api/leaders/${id}`,
       data,
       {
         headers: {

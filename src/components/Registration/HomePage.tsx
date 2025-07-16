@@ -12,7 +12,7 @@ import {
 } from "recharts";
 import StarRatings from "react-star-ratings";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { logout } from "../../redux/reducers/authSlice";
 import { fetchLeaders } from "../../redux/reducers/leadersSlice";
 import type { AppDispatch, RootState } from "../../redux/store";
@@ -222,16 +222,15 @@ const Homepage: React.FC = () => {
           Welcome, {userProfile?.firstName}
         </h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          <Link
+          {/* <Link
             to="/createLeader"
             className="bg-[#007E66] text-white font-medium px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm sm:text-base w-full sm:w-auto text-center"
           >
             Create Leader
-          </Link>
+          </Link> */}
           <button
             onClick={() => {
               dispatch(logout());
-              localStorage.clear();
               navigate("/login");
             }}
             className="bg-red-600 text-white px-4 py-2 rounded-lg font-medium hover:bg-red-700 transition text-sm sm:text-base w-full sm:w-auto"
@@ -268,85 +267,86 @@ const Homepage: React.FC = () => {
         </div>
       </div>
 
-   {currentLeader ? (
-  <>
-    <h2 className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
-      {currentLeader.position === "president" ? (
+      {currentLeader ? (
         <>
-          HE {currentLeader.name}
-          <span className="font-normal text-gray-600"> (President)</span>
+          <h2 className="mt-6 sm:mt-8 text-lg sm:text-xl lg:text-2xl font-bold text-gray-800">
+            {currentLeader.position === "president" ? (
+              <>
+                HE {currentLeader.name}
+                <span className="font-normal text-gray-600"> (President)</span>
+              </>
+            ) : (
+              <>
+                Hon. {currentLeader.name}
+                <span className="font-normal text-gray-600">
+                  {" "}
+                  ({currentLeader.position.toUpperCase()})
+                </span>
+              </>
+            )}
+          </h2>
+
+          <div className="mt-6 sm:mt-8 w-full">
+            <h3 className="text-gray-700 font-semibold text-base sm:text-lg mb-4">
+              Performance Score Breakdown (%)
+            </h3>
+
+            {/* Legend */}
+            <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded bg-[#dc2626]" />
+                <span className="text-sm text-gray-700">Poor (0–24%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded bg-[#facc15]" />
+                <span className="text-sm text-gray-700">Average (25–49%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded bg-[#3b82f6]" />
+                <span className="text-sm text-gray-700">Good (50–74%)</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <div className="w-4 h-4 rounded bg-[#16a34a]" />
+                <span className="text-sm text-gray-700">
+                  Excellent (75–100%)
+                </span>
+              </div>
+            </div>
+
+            {/* Chart Container */}
+            <div className="h-64 xs:h-72 sm:h-80 md:h-[22rem] lg:h-[24rem] w-full">
+              <ResponsiveContainer width="100%" height="100%">
+                <BarChart data={manifestoChartData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis
+                    dataKey="title"
+                    tick={renderCustomTick}
+                    interval={0}
+                    height={140}
+                  />
+                  <YAxis
+                    domain={[0, 100]}
+                    tickFormatter={(tick) => `${tick}%`}
+                    tick={{ fontSize: 12, fill: "#4B5563" }}
+                  />
+                  <Tooltip formatter={(val: number) => `${val}%`} />
+                  <Bar dataKey="percentage" barSize={30}>
+                    {manifestoChartData.map((entry, index) => (
+                      <Cell key={`cell-${index}`} fill={entry.fill} />
+                    ))}
+                  </Bar>
+                </BarChart>
+              </ResponsiveContainer>
+            </div>
+          </div>
+
+          <LeaderReview leader={currentLeader} />
         </>
       ) : (
-        <>
-          Hon. {currentLeader.name}
-          <span className="font-normal text-gray-600">
-            {" "}
-            ({currentLeader.position.toUpperCase()})
-          </span>
-        </>
+        <p className="mt-6 text-gray-600 text-sm sm:text-base">
+          No leader available at this level.
+        </p>
       )}
-    </h2>
-
-    <div className="mt-6 sm:mt-8 w-full">
-      <h3 className="text-gray-700 font-semibold text-base sm:text-lg mb-4">
-        Manifesto Score Breakdown (%)
-      </h3>
-
-      {/* Legend */}
-      <div className="flex flex-col sm:flex-row flex-wrap items-start sm:items-center gap-3 sm:gap-4 mb-4 sm:mb-6">
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-[#dc2626]" />
-          <span className="text-sm text-gray-700">Poor (0–24%)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-[#facc15]" />
-          <span className="text-sm text-gray-700">Average (25–49%)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-[#3b82f6]" />
-          <span className="text-sm text-gray-700">Good (50–74%)</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-4 h-4 rounded bg-[#16a34a]" />
-          <span className="text-sm text-gray-700">Excellent (75–100%)</span>
-        </div>
-      </div>
-
-      {/* Chart Container */}
-      <div className="h-64 xs:h-72 sm:h-80 md:h-[22rem] lg:h-[24rem] w-full">
-        <ResponsiveContainer width="100%" height="100%">
-          <BarChart data={manifestoChartData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis
-              dataKey="title"
-              tick={renderCustomTick}
-              interval={0}
-              height={140}
-            />
-            <YAxis
-              domain={[0, 100]}
-              tickFormatter={(tick) => `${tick}%`}
-              tick={{ fontSize: 12, fill: "#4B5563" }}
-            />
-            <Tooltip formatter={(val: number) => `${val}%`} />
-            <Bar dataKey="percentage" barSize={30}>
-              {manifestoChartData.map((entry, index) => (
-                <Cell key={`cell-${index}`} fill={entry.fill} />
-              ))}
-            </Bar>
-          </BarChart>
-        </ResponsiveContainer>
-      </div>
-    </div>
-
-    <LeaderReview leader={currentLeader} />
-  </>
-) : (
-  <p className="mt-6 text-gray-600 text-sm sm:text-base">
-    No leader available at this level.
-  </p>
-)}
-
 
       <div className="mt-8 sm:mt-12">
         <h3 className="text-[#007E66] text-base sm:text-lg lg:text-xl font-semibold mb-4">
