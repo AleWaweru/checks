@@ -17,6 +17,8 @@ const CreateLeaderForm: React.FC = () => {
   const [selectedCounty, setSelectedCounty] = useState("");
   const [selectedConstituency, setSelectedConstituency] = useState("");
   const [selectedWard, setSelectedWard] = useState("");
+  const [loading, setLoading] = useState(false); // Add this
+
 
   const navigate = useNavigate();
   const handlePositionChange = (pos: string) => {
@@ -31,46 +33,50 @@ const CreateLeaderForm: React.FC = () => {
     else setLevel("country");
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+ const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setLoading(true); 
 
-    const manifesto = getManifestoTopics(level).map((title) => ({ title }));
+  const manifesto = getManifestoTopics(level).map((title) => ({ title }));
 
-    const payload = {
-      name,
-      position: position as "president" | "governor" | "mp" | "mca",
-      level: level as "country" | "county" | "constituency" | "ward",
-      manifesto,
-      ...(position === "governor" && { county: selectedCounty }),
-      ...(position === "mp" && {
-        county: selectedCounty,
-        constituency: selectedConstituency,
-      }),
-      ...(position === "mca" && {
-        county: selectedCounty,
-        constituency: selectedConstituency,
-        ward: selectedWard,
-      }),
-    };
-
-    try {
-      await dispatch(createLeader(payload)).unwrap();
-      toast.success("Leader created successfully!");
-      setName("");
-      setPosition("");
-      setLevel("county");
-      setSelectedCounty("");
-      setSelectedConstituency("");
-      setSelectedWard("");
-      navigate("/admin");
-    } catch (err: any) {
-      if (err?.message?.includes("Leader already exists")) {
-        alert("Leader already exists for this region and position.");
-      } else {
-        alert(err.message || "Failed to create leader");
-      }
-    }
+  const payload = {
+    name,
+    position: position as "president" | "governor" | "mp" | "mca",
+    level: level as "country" | "county" | "constituency" | "ward",
+    manifesto,
+    ...(position === "governor" && { county: selectedCounty }),
+    ...(position === "mp" && {
+      county: selectedCounty,
+      constituency: selectedConstituency,
+    }),
+    ...(position === "mca" && {
+      county: selectedCounty,
+      constituency: selectedConstituency,
+      ward: selectedWard,
+    }),
   };
+
+  try {
+    await dispatch(createLeader(payload)).unwrap();
+    toast.success("Leader created successfully!");
+    setName("");
+    setPosition("");
+    setLevel("county");
+    setSelectedCounty("");
+    setSelectedConstituency("");
+    setSelectedWard("");
+    navigate("/admin");
+  } catch (err: any) {
+    if (err?.message?.includes("Leader already exists")) {
+      alert("Leader already exists for this region and position.");
+    } else {
+      alert(err.message || "Failed to create leader");
+    }
+  } finally {
+    setLoading(false); // Hide loader
+  }
+};
+
 
   const constituencies = selectedCounty
     ? RegionalData.find((c) => c.county === selectedCounty)?.constituencies ||
@@ -217,12 +223,16 @@ const CreateLeaderForm: React.FC = () => {
           ))}
         </div>
 
-        <button
-          type="submit"
-          className="w-full bg-[#007E66] text-white py-2 px-4 rounded hover:bg-[#006655] font-semibold"
-        >
-          Create Leader
-        </button>
+      <button
+  type="submit"
+  disabled={loading}
+  className={`w-full py-2 px-4 rounded font-semibold transition duration-200 ${
+    loading ? "bg-gray-400 cursor-not-allowed" : "bg-[#007E66] hover:bg-[#006655] text-white"
+  }`}
+>
+  {loading ? "Creating..." : "Create Leader"}
+</button>
+
       </form>
     </div>
   );

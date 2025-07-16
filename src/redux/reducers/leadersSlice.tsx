@@ -112,8 +112,8 @@ export const updateLeader = createAsyncThunk<
   try {
     const token = getState().auth.token;
 
-   const response = await axios.put(
-  `http://localhost:5000/api/leaders/${id}`,
+    const response = await axios.put(
+      `http://localhost:5000/api/leaders/${id}`,
       data,
       {
         headers: {
@@ -131,9 +131,28 @@ export const updateLeader = createAsyncThunk<
   }
 });
 
-// ------------------
-// Slice
-// ------------------
+export const deleteLeader = createAsyncThunk<
+  string, // return the deleted leader's ID
+  string, // the leader ID to delete
+  { state: RootState; rejectValue: string }
+>("leaders/delete", async (id, { getState, rejectWithValue }) => {
+  try {
+    const token = getState().auth.token;
+
+    await axios.delete(`http://localhost:5000/api/leaders/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    return id;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return rejectWithValue(
+      error.response?.data?.message || "Failed to delete leader"
+    );
+  }
+});
 
 const leaderSlice = createSlice({
   name: "leaders",
@@ -195,6 +214,23 @@ const leaderSlice = createSlice({
       .addCase(updateLeader.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload || "Error updating leader";
+      })
+
+      // Delete
+      .addCase(deleteLeader.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(
+        deleteLeader.fulfilled,
+        (state, action: PayloadAction<string>) => {
+          state.loading = false;
+          state.leaders = state.leaders.filter((l) => l._id !== action.payload);
+        }
+      )
+      .addCase(deleteLeader.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload || "Error deleting leader";
       });
   },
 });
