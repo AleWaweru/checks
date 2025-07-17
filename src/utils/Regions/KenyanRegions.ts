@@ -215,7 +215,9 @@ export const RegionalData = [
           { "name": "Garsen South", "wardCode": "0086" },
           { "name": "Garsen North", "wardCode": "0087" },
           { "name": "Garsen Central", "wardCode": "0088" },
-          { "name": "Garsen West", "wardCode": "0089" }
+          { "name": "Garsen West", "wardCode": "0089" },
+          { "name": "Kipini East", "wardCode": "0000" },
+          { "name": "Kipini West", "wardCode": "0000" }
         ]
       },
       {
@@ -301,7 +303,8 @@ export const RegionalData = [
           { "name": "Ronge", "wardCode": "0118" },
           { "name": "Mwatate", "wardCode": "0119" },
           { "name": "Bura", "wardCode": "0120" },
-          { "name": "Chawia", "wardCode": "0121" }
+          { "name": "Chawia", "wardCode": "0121" },
+          { "name": "Wusi‑Kishamba", "wardCode": "0121" }
         ]
       },
       {
@@ -3284,7 +3287,7 @@ export const RegionalData = [
           { "name": "Kilimani", "wardCode": "1436" },
           { "name": "Kawangware", "wardCode": "1437" },
           { "name": "Kabiro", "wardCode": "1438" },
-          { "name": "Mutu-ini", "wardCode": "1439" }
+          { "name": "Kileleshwa", "wardCode": "1439" }
         ]
       },
       {

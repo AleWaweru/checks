@@ -28,15 +28,18 @@ const AdminDashboard: React.FC = () => {
   const [editId, setEditId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [editedCounty, setEditedCounty] = useState<string>("");
+  const [editedConstituency, setEditedConstituency] = useState<string>("");
+  const [editedWard, setEditedWard] = useState<string>("");
 
   useEffect(() => {
-  const fetchData = async () => {
-    if (!user) return navigate("/login");
-    if (user.role !== "admin") return navigate("/home");
-    await dispatch(fetchLeaders());
-  };
-  fetchData();
-}, [dispatch, user, navigate]);
+    const fetchData = async () => {
+      if (!user) return navigate("/login");
+      if (user.role !== "admin") return navigate("/home");
+      await dispatch(fetchLeaders());
+    };
+    fetchData();
+  }, [dispatch, user, navigate]);
 
   const getParam = (key: string) => searchParams.get(key) || "";
   const setParam = (key: string, value: string) => {
@@ -72,16 +75,32 @@ const AdminDashboard: React.FC = () => {
 
   const totalPages = Math.ceil(filteredLeaders.length / ITEMS_PER_PAGE);
 
-  const handleEdit = (id: string, name: string) => {
+  const handleEdit = (
+    id: string,
+    name: string,
+    county?: string,
+    constituency?: string,
+    ward?: string
+  ) => {
     setEditId(id);
     setEditedName(name);
+    setEditedCounty(county || "");
+    setEditedConstituency(constituency || "");
+    setEditedWard(ward || "");
   };
 
   const handleSave = async (id: string) => {
     if (!editedName.trim()) return;
 
+    const dataToUpdate = {
+      name: editedName,
+      county: editedCounty,
+      constituency: editedConstituency,
+      ward: editedWard,
+    };
+
     toast.promise(
-      dispatch(updateLeader({ id, data: { name: editedName } }))
+      dispatch(updateLeader({ id, data: dataToUpdate }))
         .unwrap()
         .then(() => setEditId(null)),
       {
@@ -140,7 +159,9 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <aside
-        className={`$${isSidebarOpen ? "block" : "hidden"} md:block w-full md:w-64 bg-white shadow-md p-4 z-10 h-full`}
+        className={`$${
+          isSidebarOpen ? "block" : "hidden"
+        } md:block w-full md:w-64 bg-white shadow-md p-4 z-10 h-full`}
       >
         <nav className="flex flex-col gap-3">
           {["governor", "mp", "mca"].map((tab) => (
@@ -242,7 +263,9 @@ const AdminDashboard: React.FC = () => {
                   <th className="px-4 py-2">Name</th>
                   <th className="px-4 py-2">Position</th>
                   <th className="px-4 py-2">County</th>
-                  {activeTab !== "governor" && <th className="px-4 py-2">Constituency</th>}
+                  {activeTab !== "governor" && (
+                    <th className="px-4 py-2">Constituency</th>
+                  )}
                   {activeTab === "mca" && <th className="px-4 py-2">Ward</th>}
                   <th className="px-4 py-2">Actions</th>
                 </tr>
@@ -250,7 +273,9 @@ const AdminDashboard: React.FC = () => {
               <tbody>
                 {paginatedLeaders.map((leader, idx) => (
                   <tr key={leader._id} className="border-t">
-                    <td className="px-4 py-2">{(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}</td>
+                    <td className="px-4 py-2">
+                      {(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
+                    </td>
                     <td className="px-4 py-2">
                       {editId === leader._id ? (
                         <input
@@ -264,12 +289,48 @@ const AdminDashboard: React.FC = () => {
                       )}
                     </td>
                     <td className="px-4 py-2 capitalize">{leader.position}</td>
-                    <td className="px-4 py-2">{leader.county || "-"}</td>
+                    <td className="px-4 py-2">
+                      {editId === leader._id ? (
+                        <input
+                          type="text"
+                          value={editedCounty}
+                          onChange={(e) => setEditedCounty(e.target.value)}
+                          className="border rounded px-2 py-1 w-full"
+                        />
+                      ) : (
+                        leader.county || "-"
+                      )}
+                    </td>
+
                     {activeTab !== "governor" && (
-                      <td className="px-4 py-2">{leader.constituency || "-"}</td>
+                      <td className="px-4 py-2">
+                        {editId === leader._id ? (
+                          <input
+                            type="text"
+                            value={editedConstituency}
+                            onChange={(e) =>
+                              setEditedConstituency(e.target.value)
+                            }
+                            className="border rounded px-2 py-1 w-full"
+                          />
+                        ) : (
+                          leader.constituency || "-"
+                        )}
+                      </td>
                     )}
                     {activeTab === "mca" && (
-                      <td className="px-4 py-2">{leader.ward || "-"}</td>
+                      <td className="px-4 py-2">
+                        {editId === leader._id ? (
+                          <input
+                            type="text"
+                            value={editedWard}
+                            onChange={(e) => setEditedWard(e.target.value)}
+                            className="border rounded px-2 py-1 w-full"
+                          />
+                        ) : (
+                          leader.ward || "-"
+                        )}
+                      </td>
                     )}
                     <td className="px-4 py-2">
                       {editId === leader._id ? (
@@ -290,7 +351,15 @@ const AdminDashboard: React.FC = () => {
                       ) : (
                         <div className="flex gap-2">
                           <button
-                            onClick={() => handleEdit(leader._id!, leader.name)}
+                            onClick={() =>
+                              handleEdit(
+                                leader._id!,
+                                leader.name,
+                                leader.county,
+                                leader.constituency,
+                                leader.ward
+                              )
+                            }
                             className="text-blue-600 hover:underline text-sm"
                           >
                             ✏️ Edit
