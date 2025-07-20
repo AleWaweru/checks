@@ -1,4 +1,8 @@
-import { createSlice, createAsyncThunk, type PayloadAction } from "@reduxjs/toolkit";
+import {
+  createSlice,
+  createAsyncThunk,
+  type PayloadAction,
+} from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Types
@@ -48,11 +52,16 @@ export const registerUser = createAsyncThunk(
   "auth/register",
   async (userData: RegisterPayload, thunkAPI) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/register", userData);
-      return { user: res.data.user, token: res.data.token };
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        userData
+      );
+      return { message: res.data.message }; // <-- only expect message
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || "Registration failed");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Registration failed"
+      );
     }
   }
 );
@@ -61,11 +70,16 @@ export const loginUser = createAsyncThunk(
   "auth/login",
   async (loginData: LoginPayload, thunkAPI) => {
     try {
-      const res = await axios.post("http://localhost:5000/api/auth/login", loginData);
+      const res = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        loginData
+      );
       return { user: res.data.user, token: res.data.token };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
-      return thunkAPI.rejectWithValue(error.response?.data?.message || "Login failed");
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Login failed"
+      );
     }
   }
 );
@@ -81,7 +95,10 @@ const authSlice = createSlice({
       state.loading = false;
       state.error = null;
     },
-    setCredentials(state, action: PayloadAction<{ user: User; token: string }>) {
+    setCredentials(
+      state,
+      action: PayloadAction<{ user: User; token: string }>
+    ) {
       state.user = action.payload.user;
       state.token = action.payload.token;
     },
@@ -92,11 +109,12 @@ const authSlice = createSlice({
         state.loading = true;
         state.error = null;
       })
-      .addCase(registerUser.fulfilled, (state, action) => {
+      .addCase(registerUser.fulfilled, (state) => {
         state.loading = false;
-        state.user = action.payload.user;
-        state.token = action.payload.token;
+        state.user = null; // <-- no user yet
+        state.token = null;
       })
+
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;

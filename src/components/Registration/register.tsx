@@ -44,24 +44,27 @@ const Register: React.FC = () => {
     e.preventDefault();
     setLoading(true);
 
-    try {
-      await dispatch(
-        registerUser({
-          ...formData,
-          county: selectedCounty,
-          constituency: selectedConstituency,
-          ward: selectedWard,
-        })
-      ).unwrap();
-      toast.success("Registration successful!");
-      setTimeout(() => {
-        navigate("/login");
-      }, 2000);
-    } catch (error: any) {
-      alert(error.message || "Something went wrong. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+   try {
+  await dispatch(
+    registerUser({
+      ...formData,
+      county: selectedCounty,
+      constituency: selectedConstituency,
+      ward: selectedWard,
+    })
+  ).unwrap();
+  
+  toast.success("Registration successful! Please check your email to verify your account.");
+  
+  setTimeout(() => {
+    navigate("/login");
+  }, 3000);
+} catch (error: any) {
+  toast.error(error.message || "Something went wrong. Please try again.");
+} finally {
+  setLoading(false);
+}
+
   };
 
   const constituencies = selectedCounty
@@ -72,6 +75,7 @@ const Register: React.FC = () => {
   const wards = selectedConstituency
     ? constituencies.find((c) => c.name === selectedConstituency)?.wards || []
     : [];
+    
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
