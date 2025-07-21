@@ -43,7 +43,7 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
 
     try {
       const res = await axios.get(
-        `${import.meta.env.VITE_API_URL}/${leader._id}`
+        `${import.meta.env.VITE_API_URL}/reviews/${leader._id}`
       );
       const existingReview = res.data.find(
         (r: any) => r.userId._id === user._id
