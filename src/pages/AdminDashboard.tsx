@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../redux/reducers/authSlice";
@@ -5,6 +6,7 @@ import {
   deleteLeader,
   fetchLeaders,
   updateLeader,
+  type Leader,
 } from "../redux/reducers/leadersSlice";
 import type { RootState, AppDispatch } from "../redux/store";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -23,7 +25,8 @@ const AdminDashboard: React.FC = () => {
     (state: RootState) => state.leaders
   );
 
-  const [activeTab, setActiveTab] = useState("governor");
+ const [activeTab, setActiveTab] = useState<"governor" | "mp" | "mca">("governor");
+
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState<string>("");
@@ -55,7 +58,7 @@ const AdminDashboard: React.FC = () => {
     mca: leaders.filter((l) => l.position === "mca"),
   };
 
-  const filteredLeaders = groupedLeaders[activeTab].filter((leader) => {
+  const filteredLeaders = (groupedLeaders as { [key: string]: Leader[] })[activeTab].filter((leader: any) =>{
     const countyMatch = getParam("county")
       ? leader.county === getParam("county")
       : true;
@@ -168,7 +171,7 @@ const AdminDashboard: React.FC = () => {
             <button
               key={tab}
               onClick={() => {
-                setActiveTab(tab);
+                setActiveTab(tab as any);
                 setCurrentPage(1);
                 setSearchParams({});
                 setSidebarOpen(false);
