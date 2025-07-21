@@ -21,8 +21,6 @@ function App() {
         <Route path="/admin" element={<AdminDashboard />} />
         <Route path="/unauthorized" element={<Unauthorized />} />
         <Route path="/redirect" element={<RedirectPage />} />
-
-
       </Routes>
     </Router>
   );

@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../redux/store";
-import { loginUser } from "../../redux/reducers/authSlice";
+import { loginUser, setCredentials } from "../../redux/reducers/authSlice";
 import { Link, useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { GoogleLogin } from "@react-oauth/google";
+import { jwtDecode } from "jwt-decode";
 
 const Login: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -22,24 +24,61 @@ const Login: React.FC = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-const handleSubmit = async (e: React.FormEvent) => {
-  e.preventDefault();
-  const resultAction = await dispatch(loginUser(formData));
-  if (loginUser.fulfilled.match(resultAction)) {
-    const user = resultAction.payload.user; 
-    setSuccess(true);
-    toast.success("Login successful!");
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const resultAction = await dispatch(loginUser(formData));
 
-    setTimeout(() => {
-      if (user.role === "admin") {
-        navigate("/redirect");
-      } else {
-        navigate("/home");
-      }
-    }, 1500);
+    if (loginUser.fulfilled.match(resultAction)) {
+      const user = resultAction.payload.user;
+      setSuccess(true);
+      toast.success("Login successful!");
+
+      setTimeout(() => {
+        navigate(user.role === "admin" ? "/redirect" : "/home");
+      }, 1500);
+    }
+  };
+
+  interface GoogleCredential {
+    name: string;
+    email: string;
+    picture: string;
   }
-};
 
+  const handleGoogleLogin = async (credentialResponse: any) => {
+    try {
+      const decoded = jwtDecode<GoogleCredential>(
+        credentialResponse.credential!
+      );
+
+      const googleUser = {
+        name: decoded.name,
+        email: decoded.email,
+        profilePicUrl: decoded.picture,
+        county: "Nairobi",
+        constituency: "Westlands",
+        ward: "Parklands",
+      };
+
+      const res = await fetch("http://localhost:5000/api/auth/googleAuth", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(googleUser),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) throw new Error(data.message || "Google login failed");
+
+      dispatch(setCredentials({ user: data, token: data.token }));
+      toast.success("Logged in with Google!");
+
+      setTimeout(() => navigate("/home"), 1500);
+    } catch (err: any) {
+      console.error(err);
+      toast.error(err.message || "Google login error");
+    }
+  };
 
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
@@ -116,12 +155,27 @@ const handleSubmit = async (e: React.FormEvent) => {
           </button>
         </form>
 
+        <div className="my-4 text-center text-gray-500">or</div>
+
+        <div className="flex justify-center">
+          <GoogleLogin
+            onSuccess={handleGoogleLogin}
+            onError={() => toast.error("Google login failed")}
+          />
+        </div>
+
         <p className="text-sm text-center mt-4">
           Don’t have an account?{" "}
           <Link to="/register" className="text-indigo-600 hover:underline">
             Register here
           </Link>
         </p>
+        {/* <p className="mt-2 text-sm text-center">
+          Forgot your password?{" "}
+          <Link to="/forgot-password" className="text-blue-600 hover:underline">
+            Reset here
+          </Link>
+        </p> */}
       </div>
     </div>
   );
