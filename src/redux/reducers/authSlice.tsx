@@ -53,7 +53,7 @@ export const registerUser = createAsyncThunk(
   async (userData: RegisterPayload, thunkAPI) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/register",
+        `${import.meta.env.VITE_API_URL}/auth/register`,
         userData
       );
       return { message: res.data.message }; // <-- only expect message
@@ -71,7 +71,7 @@ export const loginUser = createAsyncThunk(
   async (loginData: LoginPayload, thunkAPI) => {
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/auth/login",
+        `${import.meta.env.VITE_API_URL}/auth/login`,
         loginData
       );
       return { user: res.data.user, token: res.data.token };

@@ -59,7 +59,7 @@ export const fetchLeaders = createAsyncThunk<
     const token = state.auth.token;
 
     const response = await axios.get(
-      "http://localhost:5000/api/leaders/getLeaders",
+      `${import.meta.env.VITE_API_URL}/leaders/getLeaders`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -86,7 +86,7 @@ export const createLeader = createAsyncThunk<
     const token = state.auth.token;
 
     const response = await axios.post(
-      "http://localhost:5000/api/leaders",
+      `${import.meta.env.VITE_API_URL}/leaders`,
       leaderData,
       {
         headers: {
@@ -113,7 +113,7 @@ export const updateLeader = createAsyncThunk<
     const token = getState().auth.token;
 
     const response = await axios.put(
-      `http://localhost:5000/api/leaders/${id}`,
+      `${import.meta.env.VITE_API_URL}/leaders/${id}`,
       data,
       {
         headers: {
@@ -139,7 +139,7 @@ export const deleteLeader = createAsyncThunk<
   try {
     const token = getState().auth.token;
 
-    await axios.delete(`http://localhost:5000/api/leaders/${id}`, {
+    await axios.delete(`${import.meta.env.VITE_API_URL}/leaders/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
