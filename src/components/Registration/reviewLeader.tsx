@@ -43,7 +43,7 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
 
     try {
       const res = await axios.get(
-        `http://localhost:5000/api/reviews/${leader._id}`
+        `${import.meta.env.VITE_API_URL}/${leader._id}`
       );
       const existingReview = res.data.find(
         (r: any) => r.userId._id === user._id
@@ -88,7 +88,7 @@ const LeaderReview: React.FC<Props> = ({ leader }) => {
   const handleSubmit = async () => {
     setLoading(true);
     try {
-      await axios.post("http://localhost:5000/api/reviews", {
+      await axios.post(`${import.meta.env.VITE_API_URL}/reviews`, {
         leaderId: leader._id,
         userId: user?._id,
         ratings,
