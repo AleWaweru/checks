@@ -66,7 +66,6 @@ export const fetchLeaders = createAsyncThunk<
         },
       }
     );
-    console.log("response", response);
 
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,7 +94,6 @@ export const createLeader = createAsyncThunk<
         },
       }
     );
-    console.log("response", response);
     return response.data;
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
   } catch (error: any) {
