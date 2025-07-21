@@ -48,6 +48,7 @@ const Homepage: React.FC = () => {
   const [averageScores, setAverageScores] = useState<Record<string, number>>(
     {}
   );
+  console.log(averageScores);
   const [averageScore, setAverageScore] = useState<number>(0);
   const [manifestoChartData, setManifestoChartData] = useState<
     {
