@@ -66,7 +66,7 @@ const Homepage: React.FC = () => {
     const fetchGlobalPerformance = async () => {
       try {
         const res = await fetch(
-          "http://localhost:5000/api/leaders/performance"
+          `${import.meta.env.VITE_API_URL}/leaders/performance`
         );
         const data = await res.json();
         setGlobalLeaders(data);
@@ -77,7 +77,7 @@ const Homepage: React.FC = () => {
 
     const fetchAllReviews = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/reviews/allReviews");
+        const res = await fetch(`${import.meta.env.VITE_API_URL}/reviews/allReviews`);
         const data = await res.json();
         setReviews(data);
       } catch (err) {
