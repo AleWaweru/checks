@@ -88,6 +88,7 @@ export const fetchAllUsers = createAsyncThunk(
   "auth/fetchAllUsers",
   async (_, thunkAPI) => {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       const state: any = thunkAPI.getState();
       const token = state.auth.token; // Access token from auth state
 
@@ -105,6 +106,7 @@ export const fetchAllUsers = createAsyncThunk(
       );
       console.log("Users:", res.data.users);
       return res.data.users; // Return array of users
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Failed to fetch users"

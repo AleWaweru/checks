@@ -49,6 +49,7 @@ const Homepage: React.FC = () => {
   const [reviews, setReviews] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [averageScores, setAverageScores] = useState<Record<string, number>>({});
+  console.log(averageScores);
   const [averageScore, setAverageScore] = useState<number>(0);
   const [manifestoChartData, setManifestoChartData] = useState<
     {
