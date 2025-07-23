@@ -183,6 +183,7 @@ const Homepage: React.FC = () => {
           `${import.meta.env.VITE_API_URL}/reviews/${currentLeader._id}`
         );
         const existingReview = res.data.find(
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           (r: any) => r.userId._id === userProfile._id
         );
 

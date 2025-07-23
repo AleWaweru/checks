@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-expressions */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,21 +16,33 @@ import toast from "react-hot-toast";
 
 const ITEMS_PER_PAGE = 10;
 
+interface User {
+  _id: string;
+  firstName?: string;
+  lastName?: string;
+  email?: string;
+  county?: string;
+  constituency?: string;
+  ward?: string;
+  role?: string;
+}
+
 const AdminDashboard: React.FC = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
   const user = useSelector((state: RootState) => state.auth.user);
-  const { users } = useSelector((state: any) => state.auth);
-  const { leaders, loading, error } = useSelector(
+  const { users, loading: usersLoading, error: usersError } = useSelector(
+    (state: RootState) => state.auth
+  );
+  const { leaders, loading: leadersLoading, error: leadersError } = useSelector(
     (state: RootState) => state.leaders
   );
 
   const [activeTab, setActiveTab] = useState<
     "governor" | "mp" | "mca" | "users"
   >("governor");
-
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
   const [editedName, setEditedName] = useState<string>("");
@@ -43,20 +56,24 @@ const AdminDashboard: React.FC = () => {
       if (!user) return navigate("/login");
       if (user.role !== "admin") return navigate("/home");
       await dispatch(fetchLeaders());
+      if (activeTab === "users") {
+        await dispatch(fetchAllUsers());
+      }
     };
     fetchData();
-  }, [dispatch, user, navigate]);
+  }, [dispatch, user, navigate, activeTab]);
 
   const handleFetchUsers = () => {
-    dispatch(fetchAllUsers());
     setActiveTab("users");
+    setCurrentPage(1);
+    setSearchParams({});
     setSidebarOpen(false);
+    dispatch(fetchAllUsers());
   };
 
   const getParam = (key: string) => searchParams.get(key) || "";
   const setParam = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
-    // eslint-disable-next-line @typescript-eslint/no-unused-expressions
     value ? newParams.set(key, value) : newParams.delete(key);
     setSearchParams(newParams);
   };
@@ -65,12 +82,9 @@ const AdminDashboard: React.FC = () => {
     governor: leaders.filter((l) => l.position === "governor"),
     mp: leaders.filter((l) => l.position === "mp"),
     mca: leaders.filter((l) => l.position === "mca"),
-    users: leaders.filter((l) => !l.position), // assume users have no position
   };
 
-  const filteredLeaders = (groupedLeaders as { [key: string]: Leader[] })[
-    activeTab
-  ].filter((leader: any) => {
+  const filteredLeaders = activeTab !== "users" ? groupedLeaders[activeTab].filter((leader) => {
     const countyMatch = getParam("county")
       ? leader.county === getParam("county")
       : true;
@@ -81,14 +95,21 @@ const AdminDashboard: React.FC = () => {
       ? leader.ward === getParam("ward")
       : true;
     return countyMatch && constituencyMatch && wardMatch;
-  });
+  }) : [];
 
   const paginatedLeaders = filteredLeaders.slice(
     (currentPage - 1) * ITEMS_PER_PAGE,
     currentPage * ITEMS_PER_PAGE
   );
 
-  const totalPages = Math.ceil(filteredLeaders.length / ITEMS_PER_PAGE);
+  const paginatedUsers = users?.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE
+  ) || [];
+
+  const totalPages = Math.ceil(
+    activeTab === "users" ? (users?.length || 0) / ITEMS_PER_PAGE : filteredLeaders.length / ITEMS_PER_PAGE
+  );
 
   const handleEdit = (
     id: string,
@@ -155,10 +176,12 @@ const AdminDashboard: React.FC = () => {
     ));
   };
 
-  const extractUnique = (field: keyof (typeof leaders)[0]) =>
-    Array.from(new Set(groupedLeaders[activeTab].map((l) => l[field]))).filter(
+  const extractUnique = (field: keyof Leader) => {
+    if (activeTab === "users") return [];
+    return Array.from(new Set(groupedLeaders[activeTab].map((l) => l[field]))).filter(
       Boolean
     ) as string[];
+  };
 
   const uniqueCounties = extractUnique("county");
   const uniqueConstituencies = extractUnique("constituency");
@@ -174,7 +197,7 @@ const AdminDashboard: React.FC = () => {
       </div>
 
       <aside
-        className={`$${
+        className={`${
           isSidebarOpen ? "block" : "hidden"
         } md:block w-full md:w-64 bg-white shadow-md p-4 z-10 h-full`}
       >
@@ -213,7 +236,6 @@ const AdminDashboard: React.FC = () => {
           >
             ➕ Create Leader
           </button>
-
           <button
             onClick={() => {
               dispatch(logout());
@@ -230,13 +252,13 @@ const AdminDashboard: React.FC = () => {
         {activeTab === "users" && (
           <>
             <h1 className="text-2xl font-semibold mb-6">Registered Users</h1>
-            <h2 className="text-xl font-semibold mb-2">{users.length}</h2>
+            <h2 className="text-xl font-semibold mb-2">Total Users: {users?.length || 0}</h2>
 
-            {loading ? (
-              <p className="text-gray-500">Loading...</p>
-            ) : error ? (
-              <p className="text-red-500">{error}</p>
-            ) : users?.length === 0 ? (
+            {usersLoading ? (
+              <p className="text-gray-500">Loading users...</p>
+            ) : usersError ? (
+              <p className="text-red-500">{usersError}</p>
+            ) : paginatedUsers.length === 0 ? (
               <p className="text-gray-500">No users found.</p>
             ) : (
               <div className="overflow-x-auto border rounded shadow">
@@ -254,19 +276,212 @@ const AdminDashboard: React.FC = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {users.map((user: any, index: number) => (
+                    {paginatedUsers.map((user: User, index: number) => (
                       <tr key={user._id} className="border-t">
-                        <td className="px-4 py-2">{index + 1}</td>
-                        <td className="px-4 py-2">{user.firstName}</td>
-                        <td className="px-4 py-2">{user.lastName}</td>
-                        <td className="px-4 py-2">{user.email}</td>
+                        <td className="px-4 py-2">{(currentPage - 1) * ITEMS_PER_PAGE + index + 1}</td>
+                        <td className="px-4 py-2">{user.firstName || "-"}</td>
+                        <td className="px-4 py-2">{user.lastName || "-"}</td>
+                        <td className="px-4 py-2">{user.email || "-"}</td>
                         <td className="px-4 py-2">{user.county || "-"}</td>
-                        <td className="px-4 py-2">
-                          {user.constituency || "-"}
-                        </td>
+                        <td className="px-4 py-2">{user.constituency || "-"}</td>
                         <td className="px-4 py-2">{user.ward || "-"}</td>
-                        <td className="px-4 py-2 capitalize">
-                          {user.role || "user"}
+                        <td className="px-4 py-2 capitalize">{user.role || "user"}</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+            {totalPages > 1 && (
+              <div className="flex flex-wrap justify-center mt-6 gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-3 py-1 rounded border text-sm ${
+                      currentPage === page
+                        ? "bg-blue-100 text-blue-700 font-semibold"
+                        : "hover:bg-gray-200"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+            )}
+          </>
+        )}
+
+        {activeTab !== "users" && (
+          <>
+            <h1 className="text-2xl font-semibold mb-6 capitalize">
+              {activeTab === "mp"
+                ? "Members of Parliament"
+                : activeTab.toUpperCase() + "s"}
+            </h1>
+
+            <div className="flex flex-wrap gap-4 mb-6">
+              <select
+                value={getParam("county")}
+                onChange={(e) => setParam("county", e.target.value)}
+                className="border px-3 py-2 rounded-md text-sm"
+              >
+                <option value="">All Counties</option>
+                {uniqueCounties.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+
+              {activeTab !== "governor" && (
+                <select
+                  value={getParam("constituency")}
+                  onChange={(e) => setParam("constituency", e.target.value)}
+                  className="border px-3 py-2 rounded-md text-sm"
+                >
+                  <option value="">All Constituencies</option>
+                  {uniqueConstituencies.map((c) => (
+                    <option key={c}>{c}</option>
+                  ))}
+                </select>
+              )}
+
+              {activeTab === "mca" && (
+                <select
+                  value={getParam("ward")}
+                  onChange={(e) => setParam("ward", e.target.value)}
+                  className="border px-3 py-2 rounded-md text-sm"
+                >
+                  <option value="">All Wards</option>
+                  {uniqueWards.map((w) => (
+                    <option key={w}>{w}</option>
+                  ))}
+                </select>
+              )}
+            </div>
+
+            {leadersLoading ? (
+              <p className="text-gray-500">Loading leaders...</p>
+            ) : leadersError ? (
+              <p className="text-red-500">{leadersError}</p>
+            ) : paginatedLeaders.length === 0 ? (
+              <p className="text-gray-500">No {activeTab}s found.</p>
+            ) : (
+              <div className="border rounded-md shadow-sm overflow-x-auto">
+                <table className="w-full text-sm">
+                  <thead className="bg-gray-100 text-left">
+                    <tr>
+                      <th className="px-4 py-2">#</th>
+                      <th className="px-4 py-2">Name</th>
+                      <th className="px-4 py-2">Position</th>
+                      <th className="px-4 py-2">County</th>
+                      {activeTab !== "governor" && (
+                        <th className="px-4 py-2">Constituency</th>
+                      )}
+                      {activeTab === "mca" && <th className="px-4 py-2">Ward</th>}
+                      <th className="px-4 py-2">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {paginatedLeaders.map((leader, idx) => (
+                      <tr key={leader._id} className="border-t">
+                        <td className="px-4 py-2">
+                          {(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
+                        </td>
+                        <td className="px-4 py-2">
+                          {editId === leader._id ? (
+                            <input
+                              type="text"
+                              value={editedName}
+                              onChange={(e) => setEditedName(e.target.value)}
+                              className="border rounded px-2 py-1 w-full"
+                            />
+                          ) : (
+                            leader.name
+                          )}
+                        </td>
+                        <td className="px-4 py-2 capitalize">{leader.position}</td>
+                        <td className="px-4 py-2">
+                          {editId === leader._id ? (
+                            <input
+                              type="text"
+                              value={editedCounty}
+                              onChange={(e) => setEditedCounty(e.target.value)}
+                              className="border rounded px-2 py-1 w-full"
+                            />
+                          ) : (
+                            leader.county || "-"
+                          )}
+                        </td>
+                        {activeTab !== "governor" && (
+                          <td className="px-4 py-2">
+                            {editId === leader._id ? (
+                              <input
+                                type="text"
+                                value={editedConstituency}
+                                onChange={(e) =>
+                                  setEditedConstituency(e.target.value)
+                                }
+                                className="border rounded px-2 py-1 w-full"
+                              />
+                            ) : (
+                              leader.constituency || "-"
+                            )}
+                          </td>
+                        )}
+                        {activeTab === "mca" && (
+                          <td className="px-4 py-2">
+                            {editId === leader._id ? (
+                              <input
+                                type="text"
+                                value={editedWard}
+                                onChange={(e) => setEditedWard(e.target.value)}
+                                className="border rounded px-2 py-1 w-full"
+                              />
+                            ) : (
+                              leader.ward || "-"
+                            )}
+                          </td>
+                        )}
+                        <td className="px-4 py-2">
+                          {editId === leader._id ? (
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() => handleSave(leader._id!)}
+                                className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Save
+                              </button>
+                              <button
+                                onClick={() => setEditId(null)}
+                                className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-xs"
+                              >
+                                Cancel
+                              </button>
+                            </div>
+                          ) : (
+                            <div className="flex gap-2">
+                              <button
+                                onClick={() =>
+                                  handleEdit(
+                                    leader._id!,
+                                    leader.name,
+                                    leader.county,
+                                    leader.constituency,
+                                    leader.ward
+                                  )
+                                }
+                                className="text-blue-600 hover:underline text-sm"
+                              >
+                                ✏️ Edit
+                              </button>
+                              <button
+                                onClick={() => handleDelete(leader._id!)}
+                                className="text-red-600 hover:underline text-sm"
+                              >
+                                🗑️ Delete
+                              </button>
+                            </div>
+                          )}
                         </td>
                       </tr>
                     ))}
@@ -274,204 +489,24 @@ const AdminDashboard: React.FC = () => {
                 </table>
               </div>
             )}
+            {totalPages > 1 && (
+              <div className="flex flex-wrap justify-center mt-6 gap-2">
+                {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                  <button
+                    key={page}
+                    onClick={() => setCurrentPage(page)}
+                    className={`px-3 py-1 rounded border text-sm ${
+                      currentPage === page
+                        ? "bg-blue-100 text-blue-700 font-semibold"
+                        : "hover:bg-gray-200"
+                    }`}
+                  >
+                    {page}
+                  </button>
+                ))}
+              </div>
+            )}
           </>
-        )}
-
-        <h1 className="text-2xl font-semibold mb-6 capitalize">
-          {activeTab === "mp"
-            ? "Members of Parliament"
-            : activeTab.toUpperCase() + "s"}
-        </h1>
-
-        {activeTab !== "users" && (
-          <div className="flex flex-wrap gap-4 mb-6">
-            <select
-              value={getParam("county")}
-              onChange={(e) => setParam("county", e.target.value)}
-              className="border px-3 py-2 rounded-md text-sm"
-            >
-              <option value="">All Counties</option>
-              {uniqueCounties.map((c) => (
-                <option key={c}>{c}</option>
-              ))}
-            </select>
-
-            {activeTab !== "governor" && (
-              <select
-                value={getParam("constituency")}
-                onChange={(e) => setParam("constituency", e.target.value)}
-                className="border px-3 py-2 rounded-md text-sm"
-              >
-                <option value="">All Constituencies</option>
-                {uniqueConstituencies.map((c) => (
-                  <option key={c}>{c}</option>
-                ))}
-              </select>
-            )}
-
-            {activeTab === "mca" && (
-              <select
-                value={getParam("ward")}
-                onChange={(e) => setParam("ward", e.target.value)}
-                className="border px-3 py-2 rounded-md text-sm"
-              >
-                <option value="">All Wards</option>
-                {uniqueWards.map((w) => (
-                  <option key={w}>{w}</option>
-                ))}
-              </select>
-            )}
-          </div>
-        )}
-
-        {loading ? (
-          <p className="text-gray-500">Loading...</p>
-        ) : error ? (
-          <p className="text-red-500">{error}</p>
-        ) : filteredLeaders.length === 0 ? (
-          <p className="text-gray-500">No {activeTab}s found.</p>
-        ) : (
-          <div className="border rounded-md shadow-sm overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-gray-100 text-left">
-                <tr>
-                  <th className="px-4 py-2">#</th>
-                  <th className="px-4 py-2">Name</th>
-                  <th className="px-4 py-2">Position</th>
-                  <th className="px-4 py-2">County</th>
-                  {activeTab !== "governor" && (
-                    <th className="px-4 py-2">Constituency</th>
-                  )}
-                  {activeTab === "mca" && <th className="px-4 py-2">Ward</th>}
-                  <th className="px-4 py-2">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
-                {paginatedLeaders.map((leader, idx) => (
-                  <tr key={leader._id} className="border-t">
-                    <td className="px-4 py-2">
-                      {(currentPage - 1) * ITEMS_PER_PAGE + idx + 1}
-                    </td>
-                    <td className="px-4 py-2">
-                      {editId === leader._id ? (
-                        <input
-                          type="text"
-                          value={editedName}
-                          onChange={(e) => setEditedName(e.target.value)}
-                          className="border rounded px-2 py-1 w-full"
-                        />
-                      ) : (
-                        leader.name
-                      )}
-                    </td>
-                    <td className="px-4 py-2 capitalize">{leader.position}</td>
-                    <td className="px-4 py-2">
-                      {editId === leader._id ? (
-                        <input
-                          type="text"
-                          value={editedCounty}
-                          onChange={(e) => setEditedCounty(e.target.value)}
-                          className="border rounded px-2 py-1 w-full"
-                        />
-                      ) : (
-                        leader.county || "-"
-                      )}
-                    </td>
-
-                    {activeTab !== "governor" && (
-                      <td className="px-4 py-2">
-                        {editId === leader._id ? (
-                          <input
-                            type="text"
-                            value={editedConstituency}
-                            onChange={(e) =>
-                              setEditedConstituency(e.target.value)
-                            }
-                            className="border rounded px-2 py-1 w-full"
-                          />
-                        ) : (
-                          leader.constituency || "-"
-                        )}
-                      </td>
-                    )}
-                    {activeTab === "mca" && (
-                      <td className="px-4 py-2">
-                        {editId === leader._id ? (
-                          <input
-                            type="text"
-                            value={editedWard}
-                            onChange={(e) => setEditedWard(e.target.value)}
-                            className="border rounded px-2 py-1 w-full"
-                          />
-                        ) : (
-                          leader.ward || "-"
-                        )}
-                      </td>
-                    )}
-                    <td className="px-4 py-2">
-                      {editId === leader._id ? (
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() => handleSave(leader._id!)}
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Save
-                          </button>
-                          <button
-                            onClick={() => setEditId(null)}
-                            className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-1 rounded text-xs"
-                          >
-                            Cancel
-                          </button>
-                        </div>
-                      ) : (
-                        <div className="flex gap-2">
-                          <button
-                            onClick={() =>
-                              handleEdit(
-                                leader._id!,
-                                leader.name,
-                                leader.county,
-                                leader.constituency,
-                                leader.ward
-                              )
-                            }
-                            className="text-blue-600 hover:underline text-sm"
-                          >
-                            ✏️ Edit
-                          </button>
-                          <button
-                            onClick={() => handleDelete(leader._id!)}
-                            className="text-red-600 hover:underline text-sm"
-                          >
-                            🗑️ Delete
-                          </button>
-                        </div>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-
-        {totalPages > 1 && (
-          <div className="flex flex-wrap justify-center mt-6 gap-2">
-            {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-              <button
-                key={page}
-                onClick={() => setCurrentPage(page)}
-                className={`px-3 py-1 rounded border text-sm ${
-                  currentPage === page
-                    ? "bg-blue-100 text-blue-700 font-semibold"
-                    : "hover:bg-gray-200"
-                }`}
-              >
-                {page}
-              </button>
-            ))}
-          </div>
         )}
       </main>
     </div>

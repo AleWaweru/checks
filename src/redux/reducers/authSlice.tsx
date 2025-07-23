@@ -59,6 +59,7 @@ export const registerUser = createAsyncThunk(
         userData
       );
       return { message: res.data.message };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Registration failed"
@@ -76,6 +77,7 @@ export const loginUser = createAsyncThunk(
         loginData
       );
       return { user: res.data.user, token: res.data.token };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Login failed"
