@@ -106,7 +106,6 @@ export const fetchAllUsers = createAsyncThunk(
           },
         }
       );
-      console.log("Users:", res.data.users);
       return res.data.users; // Return array of users
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
