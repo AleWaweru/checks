@@ -18,6 +18,7 @@ import { fetchLeaders } from "../../redux/reducers/leadersSlice";
 import type { AppDispatch, RootState } from "../../redux/store";
 import LeaderReview from "./reviewLeader";
 import { getManifestoTopics } from "./manifestoTopic";
+import axios from "axios";
 
 const levels = ["country", "county", "constituency", "ward"] as const;
 type Level = (typeof levels)[number];
@@ -42,13 +43,12 @@ const Homepage: React.FC = () => {
 
   const [selectedLevel, setSelectedLevel] = useState<Level>("country");
   const [globalLeaders, setGlobalLeaders] = useState<Leader[]>([]);
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [nextReviewDate, setNextReviewDate] = useState<Date | null>(null);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [reviews, setReviews] = useState<any[]>([]);
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [averageScores, setAverageScores] = useState<Record<string, number>>(
-    {}
-  );
-  console.log(averageScores);
+  const [averageScores, setAverageScores] = useState<Record<string, number>>({});
   const [averageScore, setAverageScore] = useState<number>(0);
   const [manifestoChartData, setManifestoChartData] = useState<
     {
@@ -169,6 +169,43 @@ const Homepage: React.FC = () => {
     setAverageScore(parseFloat(avg.toFixed(2)));
   }, [currentLeader, reviews]);
 
+  useEffect(() => {
+    if (!currentLeader || !userProfile) {
+      setShowReviewForm(false);
+      setNextReviewDate(null);
+      return;
+    }
+
+    const checkReviewStatus = async () => {
+      try {
+        const res = await axios.get(
+          `${import.meta.env.VITE_API_URL}/reviews/${currentLeader._id}`
+        );
+        const existingReview = res.data.find(
+          (r: any) => r.userId._id === userProfile._id
+        );
+
+        if (existingReview) {
+          const reviewDate = new Date(existingReview.createdAt);
+          const nextAllowedDate = new Date(reviewDate);
+          nextAllowedDate.setMonth(nextAllowedDate.getMonth() + 3);
+          const now = new Date();
+          setShowReviewForm(now >= nextAllowedDate);
+          setNextReviewDate(now < nextAllowedDate ? nextAllowedDate : null);
+        } else {
+          setShowReviewForm(true);
+          setNextReviewDate(null);
+        }
+      } catch (error) {
+        console.error("Failed to fetch existing review:", error);
+        setShowReviewForm(false);
+        setNextReviewDate(null);
+      }
+    };
+
+    checkReviewStatus();
+  }, [currentLeader, userProfile]);
+
   const getTopLeadersByPosition = (position: string) => {
     const leaders = globalLeaders.filter((l) => l.position === position);
 
@@ -223,12 +260,6 @@ const Homepage: React.FC = () => {
           Welcome, {userProfile?.firstName}
         </h1>
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
-          {/* <Link
-            to="/createLeader"
-            className="bg-[#007E66] text-white font-medium px-4 py-2 rounded-lg hover:bg-green-700 transition text-sm sm:text-base w-full sm:w-auto text-center"
-          >
-            Create Leader
-          </Link> */}
           <button
             onClick={() => {
               dispatch(logout());
@@ -341,7 +372,28 @@ const Homepage: React.FC = () => {
             </div>
           </div>
 
-          <LeaderReview leader={currentLeader} />
+          {showReviewForm ? (
+            <LeaderReview leader={currentLeader} />
+          ) : (
+            <div className="bg-white p-4 sm:p-6 rounded shadow mt-8 w-full max-w-3xl mx-auto text-center">
+              <p className="text-sm text-green-600 mt-2">
+                You have already submitted a review for this leader.
+              </p>
+              {nextReviewDate && (
+                <p className="mt-4 text-md text-red-500">
+                  You can submit your next review on{" "}
+                  <span className="font-medium">
+                    {nextReviewDate.toLocaleDateString(undefined, {
+                      year: "numeric",
+                      month: "long",
+                      day: "numeric",
+                    })}
+                  </span>
+                  .
+                </p>
+              )}
+            </div>
+          )}
         </>
       ) : (
         <p className="mt-6 text-gray-600 text-sm sm:text-base">

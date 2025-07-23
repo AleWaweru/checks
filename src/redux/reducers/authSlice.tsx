@@ -21,6 +21,7 @@ interface User {
 interface AuthState {
   user: User | null;
   token: string | null;
+  users: User[] | null; // Added to store list of users
   loading: boolean;
   error: string | null;
 }
@@ -43,6 +44,7 @@ interface LoginPayload {
 const initialState: AuthState = {
   user: null,
   token: null,
+  users: null, // Initialize users as null
   loading: false,
   error: null,
 };
@@ -56,8 +58,7 @@ export const registerUser = createAsyncThunk(
         `${import.meta.env.VITE_API_URL}/auth/register`,
         userData
       );
-      return { message: res.data.message }; // <-- only expect message
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return { message: res.data.message };
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Registration failed"
@@ -75,10 +76,38 @@ export const loginUser = createAsyncThunk(
         loginData
       );
       return { user: res.data.user, token: res.data.token };
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
         error.response?.data?.message || "Login failed"
+      );
+    }
+  }
+);
+
+export const fetchAllUsers = createAsyncThunk(
+  "auth/fetchAllUsers",
+  async (_, thunkAPI) => {
+    try {
+      const state: any = thunkAPI.getState();
+      const token = state.auth.token; // Access token from auth state
+
+      if (!token) {
+        return thunkAPI.rejectWithValue("No authentication token found");
+      }
+
+      const res = await axios.get(
+        `${import.meta.env.VITE_API_URL}/auth/allUsers`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log("Users:", res.data.users);
+      return res.data.users; // Return array of users
+    } catch (error: any) {
+      return thunkAPI.rejectWithValue(
+        error.response?.data?.message || "Failed to fetch users"
       );
     }
   }
@@ -92,6 +121,7 @@ const authSlice = createSlice({
     logout(state) {
       state.user = null;
       state.token = null;
+      state.users = null; // Clear users on logout
       state.loading = false;
       state.error = null;
     },
@@ -111,10 +141,9 @@ const authSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state) => {
         state.loading = false;
-        state.user = null; // <-- no user yet
+        state.user = null;
         state.token = null;
       })
-
       .addCase(registerUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
@@ -129,6 +158,18 @@ const authSlice = createSlice({
         state.token = action.payload.token;
       })
       .addCase(loginUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload as string;
+      })
+      .addCase(fetchAllUsers.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchAllUsers.fulfilled, (state, action) => {
+        state.loading = false;
+        state.users = action.payload; // Store fetched users
+      })
+      .addCase(fetchAllUsers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload as string;
       });

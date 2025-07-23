@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout } from "../redux/reducers/authSlice";
+import { fetchAllUsers, logout } from "../redux/reducers/authSlice";
 import {
   deleteLeader,
   fetchLeaders,
@@ -21,11 +21,14 @@ const AdminDashboard: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams();
 
   const user = useSelector((state: RootState) => state.auth.user);
+  const { users } = useSelector((state: any) => state.auth);
   const { leaders, loading, error } = useSelector(
     (state: RootState) => state.leaders
   );
 
- const [activeTab, setActiveTab] = useState<"governor" | "mp" | "mca">("governor");
+  const [activeTab, setActiveTab] = useState<
+    "governor" | "mp" | "mca" | "users"
+  >("governor");
 
   const [isSidebarOpen, setSidebarOpen] = useState(false);
   const [editId, setEditId] = useState<string | null>(null);
@@ -44,6 +47,12 @@ const AdminDashboard: React.FC = () => {
     fetchData();
   }, [dispatch, user, navigate]);
 
+  const handleFetchUsers = () => {
+    dispatch(fetchAllUsers());
+    setActiveTab("users");
+    setSidebarOpen(false);
+  };
+
   const getParam = (key: string) => searchParams.get(key) || "";
   const setParam = (key: string, value: string) => {
     const newParams = new URLSearchParams(searchParams);
@@ -56,9 +65,12 @@ const AdminDashboard: React.FC = () => {
     governor: leaders.filter((l) => l.position === "governor"),
     mp: leaders.filter((l) => l.position === "mp"),
     mca: leaders.filter((l) => l.position === "mca"),
+    users: leaders.filter((l) => !l.position), // assume users have no position
   };
 
-  const filteredLeaders = (groupedLeaders as { [key: string]: Leader[] })[activeTab].filter((leader: any) =>{
+  const filteredLeaders = (groupedLeaders as { [key: string]: Leader[] })[
+    activeTab
+  ].filter((leader: any) => {
     const countyMatch = getParam("county")
       ? leader.county === getParam("county")
       : true;
@@ -185,7 +197,16 @@ const AdminDashboard: React.FC = () => {
               {tab === "mp" ? "Members of Parliament" : tab.toUpperCase() + "s"}
             </button>
           ))}
-
+          <button
+            onClick={handleFetchUsers}
+            className={`text-left px-3 py-2 rounded-md transition-all duration-200 capitalize font-medium ${
+              activeTab === "users"
+                ? "bg-green-100 text-green-700"
+                : "hover:bg-gray-100 text-gray-800"
+            }`}
+          >
+            Users
+          </button>
           <button
             onClick={() => navigate("/createLeader")}
             className="text-left px-3 py-2 rounded-md text-white bg-green-600 hover:bg-green-700 transition-all"
@@ -206,50 +227,102 @@ const AdminDashboard: React.FC = () => {
       </aside>
 
       <main className="flex-1 p-4 md:p-6 overflow-y-auto">
+        {activeTab === "users" && (
+          <>
+            <h1 className="text-2xl font-semibold mb-6">Registered Users</h1>
+            <h2 className="text-xl font-semibold mb-2">{users.length}</h2>
+
+            {loading ? (
+              <p className="text-gray-500">Loading...</p>
+            ) : error ? (
+              <p className="text-red-500">{error}</p>
+            ) : users?.length === 0 ? (
+              <p className="text-gray-500">No users found.</p>
+            ) : (
+              <div className="overflow-x-auto border rounded shadow">
+                <table className="w-full text-sm text-left">
+                  <thead className="bg-gray-100">
+                    <tr>
+                      <th className="px-4 py-2">#</th>
+                      <th className="px-4 py-2">First Name</th>
+                      <th className="px-4 py-2">Last Name</th>
+                      <th className="px-4 py-2">Email</th>
+                      <th className="px-4 py-2">County</th>
+                      <th className="px-4 py-2">Constituency</th>
+                      <th className="px-4 py-2">Ward</th>
+                      <th className="px-4 py-2">Role</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {users.map((user: any, index: number) => (
+                      <tr key={user._id} className="border-t">
+                        <td className="px-4 py-2">{index + 1}</td>
+                        <td className="px-4 py-2">{user.firstName}</td>
+                        <td className="px-4 py-2">{user.lastName}</td>
+                        <td className="px-4 py-2">{user.email}</td>
+                        <td className="px-4 py-2">{user.county || "-"}</td>
+                        <td className="px-4 py-2">
+                          {user.constituency || "-"}
+                        </td>
+                        <td className="px-4 py-2">{user.ward || "-"}</td>
+                        <td className="px-4 py-2 capitalize">
+                          {user.role || "user"}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </>
+        )}
+
         <h1 className="text-2xl font-semibold mb-6 capitalize">
           {activeTab === "mp"
             ? "Members of Parliament"
             : activeTab.toUpperCase() + "s"}
         </h1>
 
-        <div className="flex flex-wrap gap-4 mb-6">
-          <select
-            value={getParam("county")}
-            onChange={(e) => setParam("county", e.target.value)}
-            className="border px-3 py-2 rounded-md text-sm"
-          >
-            <option value="">All Counties</option>
-            {uniqueCounties.map((c) => (
-              <option key={c}>{c}</option>
-            ))}
-          </select>
-
-          {activeTab !== "governor" && (
+        {activeTab !== "users" && (
+          <div className="flex flex-wrap gap-4 mb-6">
             <select
-              value={getParam("constituency")}
-              onChange={(e) => setParam("constituency", e.target.value)}
+              value={getParam("county")}
+              onChange={(e) => setParam("county", e.target.value)}
               className="border px-3 py-2 rounded-md text-sm"
             >
-              <option value="">All Constituencies</option>
-              {uniqueConstituencies.map((c) => (
+              <option value="">All Counties</option>
+              {uniqueCounties.map((c) => (
                 <option key={c}>{c}</option>
               ))}
             </select>
-          )}
 
-          {activeTab === "mca" && (
-            <select
-              value={getParam("ward")}
-              onChange={(e) => setParam("ward", e.target.value)}
-              className="border px-3 py-2 rounded-md text-sm"
-            >
-              <option value="">All Wards</option>
-              {uniqueWards.map((w) => (
-                <option key={w}>{w}</option>
-              ))}
-            </select>
-          )}
-        </div>
+            {activeTab !== "governor" && (
+              <select
+                value={getParam("constituency")}
+                onChange={(e) => setParam("constituency", e.target.value)}
+                className="border px-3 py-2 rounded-md text-sm"
+              >
+                <option value="">All Constituencies</option>
+                {uniqueConstituencies.map((c) => (
+                  <option key={c}>{c}</option>
+                ))}
+              </select>
+            )}
+
+            {activeTab === "mca" && (
+              <select
+                value={getParam("ward")}
+                onChange={(e) => setParam("ward", e.target.value)}
+                className="border px-3 py-2 rounded-md text-sm"
+              >
+                <option value="">All Wards</option>
+                {uniqueWards.map((w) => (
+                  <option key={w}>{w}</option>
+                ))}
+              </select>
+            )}
+          </div>
+        )}
 
         {loading ? (
           <p className="text-gray-500">Loading...</p>
